@@ -1,0 +1,157 @@
+{% extends '../../base2.html' %}
+{% block title %} Customers Inventory {% endblock title %}
+
+{% block content %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <div class="content-overlay"></div>
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search contacts...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header">
+                                    <h4 class="card-title">All Inventory</h4>
+                                    <div class="heading-elements mt-0">
+                                      <a href="{% url 'wholesale:create_Inventory' %}">
+                                          <button  class="btn btn-primary btn-md" data-toggle="modal" data-target="">
+                                              <i class="d-md-none d-block ft-plus white"></i>
+                                              <span class="d-md-block d-none"><i class="la la-clipboard"></i>Add Inventory</span>
+                                          </button>
+                                      </a>
+
+                                        <!-- Edit Contact -->
+                                        <div class="modal fade" id="EditContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <span class="dropdown">
+                                                <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning dropdown-toggle dropdown-menu-right btn-sm">
+                                                    <i class="ft-download-cloud white"></i>
+                                                </button>
+                                                <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item"><i class="ft-upload"></i> Import</a>
+                                                    <a href="#" class="dropdown-item"><i class="ft-download"></i> Export</a>
+                                                    <a href="#" class="dropdown-item"><i class="ft-shuffle"></i> Find Duplicate</a>
+                                                </span>
+                                            </span>
+                                            <button class="btn btn-default btn-sm"><i class="ft-settings white"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <section id="payments-details">
+                              <div class="row">
+                                  <div class="col-12">
+                                      <div class="card">
+                                          <div class="card-header">
+                                              <h4 class="card-title float-left"></h4>
+
+                                              <form method="GET" action="">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                                                      <label for="start-date">Start Date</label>
+                                                      <input type="date" class="form-control" id="start-date" name="start_date">
+                                                    </div>
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                                                      <label for="end-date">End Date</label>
+                                                      <input type="date" class="form-control" id="end-date" name="end_date">
+                                                    </div>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                            </section>
+
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <!-- Task List table -->
+                                    <a href="{% url 'wholesale:invoice' %}">
+                                      <button type="button" class="btn btn-md btn-success delete-all mb-1"><i class="la la-money"></i> Invoices </button>
+                                    </a>
+                                    <a href="{% url 'wholesale:customer' %}">
+                                      <button type="button" class="btn btn-md btn-info delete-all mb-1"><i class="la la-user"></i> Customers</button>
+                                    </a>
+                                    <div class="table-responsive">
+                                        <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                            <thead>
+                                              <tr>
+                                                <th>Date</th>
+                                                <th>Department</th>
+                                                <th>Inventory Id</th>
+                                                <th>Employee</th>
+                                                <th>Total Price</th>
+                                                <th>Status</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for inv in inventory %}
+                                                <tr>
+                                                    <td>{{ inv.created|date:"Y-m-d" }}</td>
+                                                    <td>
+                                                        <div class="media-body media-middle">
+                                                            <a href="{% url 'wholesale:inventory-detail' inv.pk %}" class="media-heading name">{{ inv.department_name }}</a>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ inv.inventory_id }}</td>
+                                                    <td>{{ inv.employee }}</td>
+                                                    <td>{{ inv.total_cost|floatformat:0 }} cfa</td>
+                                                    <td class="media-heading name success font-weight-bold">{{ inv.status }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                  <th>Date</th>
+                                                  <th>Department</th>
+                                                  <th>Inventory Id</th>
+                                                  <th>Employee</th>
+                                                  <th>Total Price</th>
+                                                  <th>Status</th>
+                                                </tr>
+                                              </tfoot>
+                                          </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+
+{% endblock content %}

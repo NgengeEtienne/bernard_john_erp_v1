@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
+    <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
+    <meta name="author" content="PIXINVENT">
+    <title>  {% block title %} Modern {% endblock title %}    </title>
+    <link rel="apple-touch-icon" href="{% static '' %}app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '' %}app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/fonts/material-icons/material-icons.css">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/material-vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/weather-icons/climacons.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/fonts/meteocons/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/charts/morris.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/charts/chartist.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/charts/chartist-plugin-tooltip.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/pickers/daterange/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/forms/selects/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/editors/quill/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/extensions/dragula.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/material-vendors-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/extensions/nouislider.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/ui/prism.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/forms/icheck/icheck.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/material.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/material-extended.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/material-colors.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/core/menu/menu-types/material-vertical-content-menu.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/fonts/simple-line-icons/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/pages/timeline.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/pages/dashboard-ecommerce.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/pages/app-todo.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css-rtl/core/menu/menu-types/material-vertical-menu-modern.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css-rtl/plugins/extensions/noui-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css-rtl/core/colors/palette-noui.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css-rtl/pages/ecommerce-shop.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css-rtl/plugins/forms/checkboxes-radios.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/plugins/forms/wizard.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/style-rtl.css">
+    <!-- END: Custom CSS-->
+
+    {% block css %}
+
+     {% endblock %}
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-content-menu material-vertical-layout material-layout 2-columns   fixed-navbar" data-open="click" data-menu="vertical-content-menu" data-col="2-columns">
+
+<!-- Top NavBar-->
+    {% include "partials/top_nav_bar.html" %}
+<!-- Top NavBar Ends -->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-header row"></div>
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+
+          <!-- BEGIN: Main Menu Nav Side Bar-->
+              {% include "partials/sidebar.html" %}
+            <!-- END: Main Menu Nav Side Bar-->
+{% block content %}
+
+            <div class="content-body">
+
+
+            </div>
+
+{% endblock content %}
+        </div>
+    </div>
+    <!-- END: Content-->
+
+
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light navbar-border">
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2019 <a class="text-bold-800 grey darken-2" href="https://1.envato.market/modern_admin" target="_blank">PIXINVENT</a></span><span class="float-md-right d-none d-lg-block">Hand-crafted & Made with<i class="ft-heart pink"></i><span id="scroll-top"></span></span></p>
+    </footer>
+    <!-- END: Footer-->
+
+
+
+    {% block script %}
+
+     {% endblock %}
+    <!-- BEGIN: Vendor JS-->
+    <script src="{% static '' %}app-assets/vendors/js/material-vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{% static '' %}app-assets/vendors/js/ui/headroom.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/charts/chartist.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/timeline/horizontal-timeline.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/editors/quill/quill.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/dragula.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/ui/prism.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/jquery.raty.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/jquery.cookie.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/jquery.treeview.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/wNumb.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/nouislider.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/forms/icheck/icheck.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{% static '' %}app-assets/js/core/app-menu.js"></script>
+    <script src="{% static '' %}app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{% static '' %}app-assets/js/scripts/pages/material-app.js"></script>
+    <script src="{% static '' %}app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="{% static '' %}app-assets/js/scripts/pages/app-todo.js"></script>
+    <script src="{% static '' %}app-assets/js/scripts/pages/content-panel-sidebar.js"></script>
+    <script src="{% static '' %}app-assets/js/scripts/pages/ecommerce-product-shop.js"></script>
+
+    <!-- END: Page JS-->
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    
+    
+    <title>Customer Autocomplete</title>
+</head>
+<body>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="form-label" for="invoice_customer_name">Customer name</label>
+            <div class="control-group">
+                <form>
+                  <label for="select-beast">Beast:</label>
+                  <select id="select-beast" required class="demo-default"
+                    placeholder="Select a person..." name="beast">
+                    <option value="">Select a person...</option>
+                    <option value="4">Thomas Edison</option>
+                    <option value="1">Nikola</option>
+                    <option value="3">Nikola Tesla</option>
+                    <option value="5">Arnold Schwarzenegger</option>
+                  </select>
+                    <button type="submit">Submit</button>
+                </form>
+                </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        
+        $('#select-beast').selectize({
+            create: false,
+            sortField: {
+              field: 'text',
+              direction: 'asc'
+            }
+          });
+                  
+    </script>
+</body>
+</html>

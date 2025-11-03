@@ -1,0 +1,288 @@
+{% extends "base2.html" %}
+<!-- Content Row -->
+{% block content %}{% load static %}
+<!-- BEGIN: Content-->
+
+
+ <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Invoice Reciept</h3>
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'bar:bakery' %}">Home</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="{% url 'bar:invoice' %}">Invoice</a>
+                            </li>
+                            <li class="breadcrumb-item active">Invoice Reciept
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="content-body">
+            <section class="card">
+                <div id="invoice-template" class="card-body p-4">
+                    <!-- Invoice Company Details -->
+                    <div id="invoice-company-details" class="row">
+                        <div class="col-sm-6 col-12 text-center text-sm-left">
+                            <div class="media row">
+                                <div class="col-12 col-sm-3 col-xl-2">
+                                    <img src="{% static '' %}app-assets/images/logo/logo-80x80.png" alt="company logo" class="mb-1 mb-sm-0" />
+                                </div>
+                                <div class="col-12 col-sm-9 col-xl-10">
+                                    <div class="media-body">
+                                        <ul class="ml-2 px-0 list-unstyled font-weight-bold">
+                                            <li class="text-bold-800">Vendor Name: BJ Complex Ltd</li>
+                                            <li>Address: Opposite ENEO ofiice</li>
+                                            <li>Sales Rep / Acc Manager: {{invoice.sales_person}} / Akem</li>
+                                            <li>Contact: +237 675 275 201 / 671 898 732</li>
+                                            <li>Email: bjcomplex100@gmail.com</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12 text-center text-sm-right">
+                            <h2>INVOICE</h2>
+                            <p class="pb-sm-3">#{{invoice.invoice_id}}</p>
+                            <ul class="px-0 list-unstyled">
+                                <li>Balance Due</li>
+                                <li class="lead text-bold-800 font-weight-bolder">{{invoice.balance_due|floatformat:0 }} cfa</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Invoice Company Details -->
+
+                    <!-- Invoice Customer Details -->
+                    <div id="invoice-customer-details" class="row pt-2">
+                        <div class="col-12 text-center text-sm-left">
+                            <p class="text-muted">Bill To</p>
+                        </div>
+                        <div class="col-sm-6 col-12 text-center text-sm-left">
+                            <ul class="px-0 list-unstyled">
+                                <li>Customer Name: <b>{{invoice.customer}} </b> </li>
+                                <li>Customer Type: <b>{{invoice.customer.customer_type}} </b> </li>
+                                <li>Tel: <b>{{invoice.customer.phone}} </b> </li>
+                                <li>SALES PERSON: <b>{{invoice.customer.customer_type}} </b> </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-12 text-center text-sm-right">
+                            <p><span class="text-muted">Invoice Date :</span> <b> {{invoice.created}}</b> </p>
+                            <p><span class="text-muted">Sales Session :</span> <b> {{invoice.sales_session}} Session</b> </p>
+                            <p><span class="text-muted">Due Date :</span> <b> {{invoice.due_date}}</b> </p>
+                        </div>
+                    </div>
+                    <!-- Invoice Customer Details -->
+
+                    <!-- Invoice Items Details -->
+                    <div id="invoice-items-details" class="pt-2">
+                        <div class="row">
+                            <div class="table-responsive col-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Item & Description</th>
+                                            <th class="text-right">Qty</th>
+                                            <th class="text-right">Price</th>
+                                            <th class="text-right">Amount</th>
+                                            <th class="text-right">Discount</th>
+                                            <th class="text-right">Discount Value</th>
+                                            <th class="text-right">Net Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                      {% for item in invoice_detail %}
+                                        <tr>
+                                            
+
+                                            <td>
+                                                <p>{{ item.product.category}}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{ item.product }}</p>
+                                            </td>
+                                            <td class="text-right">{{ item.quantity|floatformat:0  }}</td>
+                                            <td class="text-right">{{ item.price|floatformat:0  }}</td>
+                                            <td class="text-right">{{ item.get_total_amount|floatformat:0  }}</td>
+                                            <td class="text-right">{{ item.discount_price|floatformat:0  }} <b>({{ item.get_discount_percentage|floatformat:2 }}%)</b></td>
+
+                                            <td class="text-right">{{ item.discount_value|floatformat:0  }}</td>
+                                            <td class="text-right">{{ item.net_amount|floatformat:0  }}</td>
+
+                                        </tr>
+
+                                      {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            {% if invoice.returnsitems_set.exists %}
+
+                            <div class="col-sm-7 col-12 text-center text-sm-left">
+                                <p class="lead">Returns:</p>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless table-sm">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Product</th>
+                                                      <th>Qty</th>
+                                                      <th>Price</th>
+                                                      <th>Value</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+
+                                                {% for ret in invoice.returnsitems_set.all %}
+                                                  <tr>
+                                                      <th scope="row">{{ ret.product}}</th>
+
+                                                      <td>
+                                                          <p>{{ ret.quantity}}</p>
+                                                      </td>
+                                                      <td>
+                                                          <p>{{ ret.price }}</p>
+                                                      </td>
+                                                      <td class="text-right">{{ ret.total|floatformat:0  }}</td>
+                                                {% endfor %}
+
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>{% endif %}
+                            </div>
+                            
+
+                            <div class="col-sm-5 col-12">
+                                <p class="lead">Total due</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="font-weight-bold">Sub Total</td>
+                                                <td class="text-right font-weight-bold">{{ invoice.total_amount|floatformat:0  }} cfa</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">VAT (19.25%)</td>
+                                                <td class="text-right font-weight-bold">{{ invoice.vat_amount|floatformat:0 }} cfa</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Discount( {{ invoice.get_discount_percentage|floatformat:2 }}%)</td>
+                                                <td class="text-right font-weight-bold">{{ invoice.get_discount_total|floatformat:0 }} cfa</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Returns</td>
+                                                <td class="text-right font-weight-bold">({{invoice.get_net_amount|floatformat:0 }}) cfa</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold-800 font-weight-bold">Amount to be Paid</td>
+                                                <td class="text-bold-800 text-right font-weight-bold"> {{invoice.get_grand_total|floatformat:0 }} cfa</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold-800 font-weight-bold primary">Payments Installments ({{payment_installment_count}})</td>
+                                                <td class="text-bold-800 text-right font-weight-bold primary"> {{total_payments|floatformat:0 }} cfa</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold-800 font-weight-bold danger">Balance Due </td>
+                                                <td class="text-bold-800 text-right font-weight-bold danger"> {{invoice.balance_due|floatformat:0 }} cfa</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center">
+                                    <p class="mb-0 mt-1">Authorized person</p>
+                                    <img src="{% static '' %}app-assets/images/pages/signature-scan.png" alt="signature" class="height-100" />
+                                    <h6>Amanda Orton</h6>
+                                    <p class="text-muted">Managing Director</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Footer -->
+                    <div id="invoice-footer">
+                        <div class="row">
+                            <div class="col-sm-7 col-12 text-center text-sm-left">
+                                <h6>Terms & Condition</h6>
+                                <p>For any inquiry contact the Sales Rep and the Account Manager.</p>
+                            </div>
+                            <div class="col-sm-5 col-12 text-center">
+                                <button type="button" class="btn btn-info btn-print btn-lg my-1" id="printInvoice"><i class="la la-paper-plane-o mr-50"></i>
+                                    Print
+                                    Invoice</button>
+                                    <button type="button" class="btn btn-info btn-print btn-lg my-1" id="downloadInvoice"><i class="la la-paper-plane-o mr-50"></i>
+                                        Download
+                                        Invoice</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- Invoice Footer -->
+
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+{% endblock %}
+
+{% block custom_js %}
+{% load static %}
+<script src="{% static 'app-assets/js/html2pdf.bundle.min.js' %}"></script></script>
+{% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+    document.getElementById("downloadInvoice").addEventListener("click", function () {
+        var element = document.getElementById('invoice-template');
+        var opt = {
+            margin:       0,
+            filename:     '{{invoice.invoice_id}}.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'Legal', orientation: 'portrait' }
+        };
+        html2pdf().from(element).set(opt).save();
+    });
+    </script>
+    
+{% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+    document.getElementById("printInvoice").addEventListener("click", function () {
+        var printContents = document.getElementById('invoice-template').innerHTML;
+        var originalContents = document.body.innerHTML;
+    
+        document.body.innerHTML = printContents;
+    
+        window.print();
+    
+        document.body.innerHTML = originalContents;
+        location.reload();  // Refresh the page to restore original state
+    });
+    </script>
+    
+    {% endblock %}

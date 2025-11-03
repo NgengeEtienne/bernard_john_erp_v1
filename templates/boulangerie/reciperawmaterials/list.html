@@ -1,0 +1,55 @@
+{% extends "base2.html" %}
+{% block title %}Recipe Raw Materials{% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="recipe-raw-material-list">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recipe Raw Materials</h2>
+                        <a href="{% url 'boulangerie:reciperawmaterial-add' %}" class="btn btn-primary">Add Recipe Raw Material</a>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Recipe</th>
+                                            <th>Raw Material</th>
+                                            <th>Quantity per Recipe</th>
+                                            <th>Measure</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for recipe_raw_material in recipe_raw_materials %}
+                                            <tr>
+                                                <td>{{ recipe_raw_material.id }}</td>
+                                                <td>{{ recipe_raw_material.recipe }}</td>
+                                                <td>{{ recipe_raw_material.raw_material }}</td>
+                                                <td>{{ recipe_raw_material.quantity_per_recipe }}</td>
+                                                <td>{{ recipe_raw_material.measure }}</td>
+                                                <td>
+                                                    <a href="{% url 'boulangerie:reciperawmaterial-edit' recipe_raw_material.id %}" class="btn btn-warning btn-md">Edit</a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="6">No recipe raw materials found.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

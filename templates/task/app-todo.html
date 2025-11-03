@@ -1,0 +1,247 @@
++{% load static %}
+
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
+    <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
+    <meta name="author" content="PIXINVENT">
+    <title>To-Do</title>
+    <link rel="apple-touch-icon" href="{% static '' %}app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '' %}app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/pickers/daterange/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/forms/selects/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/editors/quill/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/extensions/dragula.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/core/menu/menu-types/vertical-menu-modern.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/pages/app-todo.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern content-left-sidebar todo-application  fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
+
+    <!-- BEGIN: Header-->
+{% include "partials2/top_nav_bar.html" %}
+    <!-- END: Main Menu-->
+    <!-- BEGIN: Content-->
+    <br>
+    <div class="app-content">
+
+        <div class="content-right">
+            <div class="content-overlay"></div>
+            <div class="content-wrapper">
+                <div class="content-header row">
+                </div>
+
+
+                {% for message in messages %}
+                      <div class="alert alert-success alert-dismissible fade show" {{ message.tags }} role="alert">
+                        <strong>{{ message|safe }}</strong> .
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                  {% endfor %}
+
+
+
+                <div class="content-body">
+                    <div class="app-content-overlay"></div>
+                    <div class="todo-app-area">
+                        <div class="todo-app-list-wrapper">
+                            <div class="todo-app-list">
+                                <div class="todo-fixed-search d-flex justify-content-between align-items-center">
+                                    <div class="sidebar-toggle d-block d-lg-none">
+                                        <i class="ft-align-justify"></i>
+                                    </div>
+                                    <fieldset class="form-group position-relative has-icon-left m-0 flex-grow-1 pl-2">
+                                        <input type="text" class="form-control todo-search" id="todo-search" placeholder="Search Task">
+                                        <div class="form-control-position">
+                                            <i class="ft-search"></i>
+                                        </div>
+                                    </fieldset>
+                                    <div class="todo-sort mr-1">
+                                      <a href="{% url 'task:add-task' %}">
+                                        <button type="button" class="btn btn-danger btn-glow add-task-btn btn-block my-1">
+                                            <i class="ft-plus"></i>
+                                            <span>New Task</span>
+                                        </button>
+                                      </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortDropdown">
+                                            <a class="dropdown-item ascending" href="#">Add Task</a>
+                                            <a class="dropdown-item descending" href="#"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="todo-task-list list-group">
+
+                                    <!-- task list start -->
+                                    <ul class="todo-task-list-wrapper list-unstyled" id="todo-task-list-drag">
+
+                                      {% for task in Task %}
+
+
+                                        <li class="todo-item" data-name="Maria Garcia">
+                                            <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
+
+                                              <div class="avatar ml-1">
+                                                 
+                                              </div>
+
+                                                <div class="todo-title-area d-flex">
+                                                    <i class='ft-more-vertical handle'></i>
+
+                                                    <a class="todo-title mx-50 m-0 " href="{{ task.get_absolute_url }}">Date: | {{ task.created }}  From -> {{ task.author }} | {{ task.title }}</a>
+                                                </div>
+                                                <div class="todo-item-action d-flex align-items-center">
+                                                  <p class="todo-title mx-50 m-0 truncate text-uppercase">To -> {{ task.employee }} |</p>
+                                                  <p class="todo-title mx-50 m-0 truncate"> Remaning {{ task.expiry_date| timeuntil }}</p>
+
+                                                  {% if task.state == 'Pending' %}
+
+                                                  <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-left">
+                                                      <div class="todo-title-area d-flex">
+                                                          <i class='ft-more-vertical handle'></i>
+                                                           <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="checkbox4">
+                                                                <label class="custom-control-label" for="checkbox4"></label>
+                                                            </div>
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="todo-badge-wrapper d-flex">
+                                                        <span class="badge badge-pill badge-danger ml-50">{{ task.state}} </span>
+                                                        &nbsp;&nbsp;
+                                                        <span class="badge badge-danger badge-danger ml-50">{{ task.department }}</span>
+                                                    </div>
+
+                                                    {% elif task.state == 'In Progress' %}
+
+                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-left">
+                                                        <div class="todo-title-area d-flex">
+                                                            <i class='ft-more-vertical handle'></i>
+                                                             <div class="custom-control custom-checkbox">
+                                                                  <input type="checkbox" class="custom-control-input" id="checkbox4">
+                                                                  <label class="custom-control-label" for="checkbox4"></label>
+                                                              </div>
+                                                        </div>
+                                                      </div>
+
+                                                    <div class="todo-badge-wrapper d-flex">
+                                                        <span class="badge badge-primary badge-pill ml-50">{{ task.state}} </span>
+                                                        &nbsp;&nbsp;
+                                                        <span class="badge badge-primary badge-primary ml-50">{{ task.department }}</span>
+                                                    </div>
+
+                                                    {% elif task.state == 'Completed' %}
+
+                                                    <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-left">
+                                                        <div class="todo-title-area d-flex">
+                                                            <i class='ft-more-vertical handle'></i>
+                                                             <div class="custom-control custom-checkbox">
+                                                                  <input type="checkbox" class="custom-control-input" id="checkbox4" checked>
+                                                                  <label class="custom-control-label" for="checkbox4"></label>
+                                                              </div>
+                                                        </div>
+                                                      </div>
+
+                                                    <div class="todo-badge-wrapper d-flex">
+                                                        <span class="badge badge-pill badge-success ml-50">{{ task.state}} </span>
+                                                        &nbsp;&nbsp;
+                                                        <span class="badge badge-success badge-success ml-50">{{ task.department }}</span>
+                                                    </div>
+
+                                                  {% endif %}
+
+                                                    <div class="avatar ml-1">
+                                                       
+                                                    </div>
+                                                    <a href="{% url 'task:edit-task' task.id %}" class='todo-item-favorite ml-75 warning'><i class="ft-edit"></i></a>
+                                                    <a class='todo-item-delete ml-75'><i class="ft-trash-2"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+                                    <!-- task list end -->
+
+                                    <div class="no-results">
+                                        <h5>No Items Found</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light navbar-border navbar-shadow">
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2019 <a class="text-bold-800 grey darken-2" href="https://1.envato.market/modern_admin" target="_blank">PIXINVENT</a></span><span class="float-md-right d-none d-lg-block">Hand-crafted & Made with<i class="ft-heart pink"></i><span id="scroll-top"></span></span></p>
+    </footer>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{% static '' %}app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{% static '' %}app-assets/vendors/js/pickers/daterange/moment.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/editors/quill/quill.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/dragula.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{% static '' %}app-assets/js/core/app-menu.js"></script>
+    <script src="{% static '' %}app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{% static '' %}app-assets/js/scripts/pages/app-todo.js"></script>
+    <!-- END: Page JS-->
+
+</body>
+<!-- END: Body-->
+
+</html>

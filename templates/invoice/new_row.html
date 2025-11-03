@@ -1,0 +1,36 @@
+<!-- new_row_template.html -->
+<tr class="tr">
+    <td class="sp" style="border: 0; padding: 0 0.5em 0 0; width: 20%">
+        <label class="form-label" for="sales_person">Sales Person</label>
+        {{ form.sales_person }}
+    </td>
+    <td style="border: 0; padding: 0 0.5em 0 0; width: 30%">
+        <label class="form-label" for="invoice_detail_product">Product name</label>
+        {{ form.product }}
+    </td>
+    <td style="border: 0; padding: 0 0 0 0.5em; width: 15%">
+        <label class="form-label" for="invoice_detail_qty">Quantity</label>
+        {{ form.quantity }}
+    </td>
+    <td style="border: 0; padding: 0 0 0 0.5em; width: 15%">
+        <label class="form-label" for="invoice_detail_price">Price</label>
+        {{ form.price }}
+    </td>
+    <td style="border: 0; padding: 0 0 0 0.5em; width: 100px">
+        <label class="form-label" for="invoice_detail_price">Discount Price</label>
+        {{ form.discount_price }}
+    </td>
+    <td style="border: 0; padding: 0 0 0 0.5em; width: 100px">
+        <label class="form-label" for="invoice_detail_price">Didcount value</label>
+        {{ form.discount_value }}
+    </td>
+    <td style="border: 0; padding: 0 0 0 2em; width: 15px">
+        <label class="form-label" for="invoice_detail_price">Total</label>
+        <div class="ptotal"><span id="ptotal">0.00</span> XAF</div>
+    </td>
+    <td style="border: 0; padding: 0 2em 0 1.5em; width: 15px">
+        <label class="form-label" for="invoice_price">
+            <button type="button" name="button" class="btn btn-outline-danger delete-row" style="margin-top: 31px;">Remove</button>
+        </label>
+    </td>
+</tr>

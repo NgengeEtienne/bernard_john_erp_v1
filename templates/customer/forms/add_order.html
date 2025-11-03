@@ -1,0 +1,110 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Add Order{% endblock title %}
+
+
+{% block content %}
+
+<div class="content-body">
+    <!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">Order Form</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p></p>
+                            </div>
+
+                            <form class="form" method="post" novalidate>
+                              {% csrf_token %}
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Created</label>
+                                          {% render_field form.created class="form-control" placeholder="Date Created" %}
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Session</label>
+                                          {% render_field form.session_of_the_day class="form-control" placeholder="Date Created" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Product</label>
+                                          {% render_field form.product class="form-control" placeholder="Date Created" %}
+                                      </div>
+                                  </div>
+
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Customer</label>
+                                          {% render_field form.customer class="form-control" placeholder="" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Amount</label>
+                                          {% render_field form.amount class="form-control" placeholder="Enter Amount" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+
+                                  <div class="form-actions">
+                                    <a href="{% url 'bakeryaccounts:opening-balance' %}">
+                                      <button type="button" class="btn btn-warning mr-1">
+                                          <i class="ft-x"></i> Cancel
+                                      </button>
+                                    </a>
+                                      <button type="submit" class="btn btn-primary">
+                                          <i class="la la-check-square-o"></i> Save
+                                      </button>
+                                  </div>
+
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+    </section>
+    <!-- // Basic form layout section end -->
+</div>
+
+{% endblock content %}

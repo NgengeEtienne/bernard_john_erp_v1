@@ -1,0 +1,256 @@
+{% extends "base2.html" %}
+<!-- Content Row -->
+{% block content %}
+<div class="row">   
+    <style>
+        .tr.form-row {
+            margin-bottom: 1em;
+        }
+        .hidden {
+            display: none;
+        }
+        .tr.hidden {
+            display: none;
+            visibility: hidden;
+        }
+        .ptotal {
+            margin-top: 9px;
+        }
+        td.sp{
+            width:116px;
+        }
+    </style>
+    
+   
+    <div class="col-xl-12 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <label class="m-0 font-weight-bold text-primary">Create invoice</label>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'invoice:create-invoice' %}">
+                    {% csrf_token %}
+                   
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_date">Date</label>
+                                {{ form.created }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_customer_name">Customer name</label>
+                                {{ form.customer }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_sales_session">Sales Session</label>
+                                {{ form.sales_session }}
+                            </div>
+                        </div>
+                        <div class="col-md-4 ml-auto">
+                            <div class="form-group">
+                                
+                                    <label class="form-label" for="invoice_total">Total(XAF)</label>
+                                    <div><span class="invoice_total" id="invoice_total">0.00</span> XAF</div>
+                                    {{ form.invoice_total }}
+                                
+                            </div>
+     
+                            </div>
+                        </div>
+                    </div>
+                    {{ formset.management_form }}
+                    <div class="table form-row">
+                        <table class="table">
+                            <tr class="tr">
+                                <td class="sp"  style="border: 0; padding: 0 0 0 0; width: 16px">
+                                    <label class="form-label" for="sales_person">Sales Person</label>
+                                    {{ formset.empty_form.sales_person }}
+                                </td>
+                                <td style="border: 0; padding: 0 0.5em 0 0; width: 150px">
+                                    <label class="form-label" for="invoice_detail_product">Product name</label>
+                                    {{ formset.empty_form.product }}
+                                </td>
+                                <td style="border: 0; padding: 0 0 0 0.5em; width: 100px">
+                                    <label class="form-label" for="invoice_detail_qty">Quantity</label>
+                                    {{ formset.empty_form.quantity }}
+                                </td>
+                                <td style="border: 0; padding: 0 0 0 0.5em; width: 60px">
+                                    <label class="form-label" for="invoice_detail_price">Price</label>
+                                    {{ formset.empty_form.price }}
+                                </td>
+                                <td style="border: 0; padding: 0 0 0 0.5em; width: 60px">
+                                    <label class="form-label" for="invoice_discount_price">Discount Price</label>
+                                    {{ formset.empty_form.discount_price  }}
+                                </td>
+                                <td style="border: 0; padding: 0 0 0 0.5em; width: 80px">
+                                    <label class="form-label" for="invoice_discount_value">Discount value</label>
+                                    {{ formset.empty_form.discount_value }}
+                                </td>
+                                <td style="border: 0; padding: 0 0 0 2em; width: 15px">
+                                    <label class="form-label" for="ptotal">Total</label>
+                                    <div class="ptotal"><span id="ptotal">0.00</span> XAF</div>
+                                </td>
+                                <td style="border: 0; padding: 0 0.5em 0 1.5em; width: 15px;" class="hidden">
+                                    <label class="form-label" for="invoice_price">
+                                        <button type="button" name="button" class="btn btn-outline-danger delete-row" style="margin-top: 31px;">Remove</button>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-center">
+                        <input class="btn btn-outline-warning add-form-row" style="margin: 0 1em 0 1em; width: 40%" type="button" value="Add more product" id="add_more">
+                        <input class="btn btn-outline-success" style="margin: 0 1em 0 1em; width: 40%" type="submit" name="create-invoice">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+{% endblock %}
+
+{% block custom_js %}
+    
+
+    {% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+        const productNames = [
+            //{ value: '1', text: 'gato' },
+            //{ value: 'product2', text: 'Product 2' },
+            //{ value: 'product3', text: 'Product 3' }
+            // Add more product names as needed
+        ];
+        
+        $(document).ready(function() {
+            // Initialize selectize for customer name
+            $('#invoice_customer_name').selectize({
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+        
+            // Initialize selectize for product name and fetch options
+            var $select = $('select[name$="product"]').selectize({
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+        
+            var selectizeControl = $select[0].selectize;
+        
+            // Fetch options and store in productNames array
+            var options = selectizeControl.options;
+            for (var key in options) {
+                if (options.hasOwnProperty(key)) {
+                    productNames.push({ value: key, text: options[key].text });
+                }
+            }
+        
+            // Function to initialize selectize for new rows
+            function initializeSelectize(row) {
+                row.find('select[name$="product"]').each(function() {
+                    if ($(this)[0].selectize) {
+                        $(this)[0].selectize.destroy();
+                    }
+                    $(this).selectize({
+                        create: false,
+                        options: productNames,
+                        sortField: {
+                            field: 'text',
+                            direction: 'asc'
+                        }
+                    });
+                });
+                $('.selectize-input').addClass('form-control');
+            }
+        
+            // Event listener for Add More button
+            $('#add_more').click(function() {
+                $.ajax({
+                    url: "/invoice/add_more_row",  // Update with your URL
+                    method: 'GET',
+                    success: function(response) {
+                        var $newRow = $(response.row_html);
+                        $('table').append($newRow);
+                        initializeSelectize($newRow);
+                    }
+                });
+            });
+        
+            // Event listener for Delete button
+            $(document).on('click', '.delete-row', function() {
+                var row = $(this).closest('.tr');
+                row.find('input').val('');
+                row.find('.ptotal').text('0.00');
+                row.remove();
+                calcTotal(); // Recalculate the invoice_total if needed
+            });
+        
+            // Event listener for quantity and price input changes
+            $(document).on('input', 'input[name$="quantity"], input[name$="price"],input[name$="discount_value"], input[name$="-discount_price"]', function() {
+                calcTotal();
+            });
+
+
+            function calcTotal() {
+                var sum = 0;
+                $('.tr:visible').each(function() {
+                    var quantity = parseFloat($(this).find('input[name$="-quantity"]').val());
+                    var price = parseFloat($(this).find('input[name$="-price"]').val());
+                    var discount_price = parseFloat($(this).find('input[name$="discount_price"]').val());
+                    var amount = isNaN(quantity) || isNaN(price) ? 0 : (quantity * price)-(quantity*discount_price);
+                    $(this).find('input[name$="discount_value"]').val((quantity*discount_price).toFixed(2));
+                    $(this).find('span[id^="ptotal"]').text(amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                    sum += amount;
+                });
+                $('#invoice_total').text(sum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                $('#hinvoice_total').val(sum)
+            }
+            
+            function fetchProductPriceByName(productId, priceField) {
+                console.log("in");
+                $.ajax({
+                    url: "/invoice/get_product_price",
+                    data: {
+                        'product_id': productId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data && data.price) {
+                            priceField.val(data.price);
+                            console.log(data.price);
+                            calcTotal();
+                        }
+                    }
+                });
+            }
+            // Event listener for product change
+            $(document).on('change', 'select[name$="-product"]', function() {
+                var productId = $(this).val();
+                var row = $(this).closest('.tr');
+                var priceField = row.find('input[name$="-price"]');
+                console.log(priceField);
+                fetchProductPriceByName(productId, priceField);
+            });
+        
+            // Initialize Selectize for the initial visible rows
+            initializeSelectize($('.tr:first'));
+            $('.selectize-input').addClass('form-control');
+        });
+    </script>        
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} {% if form.instance.pk %} Edit Product Recipe {% else %} Add Product Recipe {% endif %} {% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="{% if form.instance.pk %}edit-product-recipe{% else %}add-product-recipe{% endif %}">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if form.instance.pk %}
+                                Edit Product Recipe
+                            {% else %}
+                                Add Product Recipe
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'bakery:recipes' %}" class="btn btn-primary">Back to Recipe list</a>
+                        
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form" method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+
+                                    <!-- Quantity Per Product -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="quantity_per_product">recipe_name</label>
+                                            {% render_field form.recipe_name class="form-control" placeholder="Enter Quantity Per Product" %}
+                                            {% if form.recipe_name.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.recipe_name.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions mx-2 my-2">
+                                    <a href="{% url 'bakery:recipes' %}">
+                                        <button type="button" class="btn btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> 
+                                        {% if form.instance.pk %}
+                                            Update
+                                        {% else %}
+                                            Save
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

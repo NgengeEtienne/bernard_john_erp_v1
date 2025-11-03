@@ -1,0 +1,28 @@
+<tr class="out">
+    <td class="p-1 col-md-3">
+        <label class="form-label" for="production_detail_output_category">Output Category</label>
+        {{ form.output_category }}
+    </td>
+    <td class="p-1 col-md-3">
+        <label class="form-label" for="production_detail_product">Product</label>
+        {{ form.product }}
+    </td>
+    <td class="p-1 col-md-2">
+        <label class="form-label" for="production_detail_qty">Quantity</label>
+        {{ form.qty }}
+    </td>
+    <td class="p-1 col-md-2">
+        <label class="form-label" for="production_detail_product_price">Price</label>
+        {{ form.product_price }}
+    </td>
+
+    <td class="p-1 col-md-2">
+        <span class="form-label" for="ptotal">Total</span>
+        <input type="text" name="ptotal" class="form-control ptotal" value=0.00 id="ptotal" readonly>
+    </td>
+    <td class="p-1 col-md-2 delete-row">
+        <label class="form-label py-1" for="delete-row">
+            <a class="danger mr-1"><i class="la la-trash-o"></i></a>
+        </label>
+    </td>
+</tr> 

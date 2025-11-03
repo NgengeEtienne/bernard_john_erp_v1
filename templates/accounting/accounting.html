@@ -1,0 +1,132 @@
+
+        {% extends 'base2.html' %}
+{% block title %} Accounting {% endblock title %}
+
+{% block content %}   
+{% comment %} <style> .tt{ background-color: white}</style>   {% endcomment %}
+<!-- BEGIN: Content -->
+{% load static %}
+<section class="row all-contacts tt p-4">
+    <div class="col-12">
+        
+       
+        
+       
+        <div class="container">
+            <div class="row">
+
+
+<!-- Accounting Card -->
+<div class="col-md-6 col-sm-12 mb-4">
+    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+        <div class="card-header">
+            <h5 class="m-0">Accounting</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <tbody>
+                    <!-- Accounts Category -->
+                    <tr>
+                        <td><a href="{% url 'accounting:accounts_category' %}">Accounts Category</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:accounts_category_add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:accounts_category' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Accounts Sub Category -->
+                    <tr>
+                        <td><a href="{% url 'accounting:accounts_sub_category'  %}">Accounts Sub Category</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:accounts_sub_category_add'  %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:accounts_sub_category'  %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Accounts Debit -->
+                    <tr>
+                        <td><a href="{% url 'accounting:accounts_debit'  %}">Accounts Debit</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:accounts_debit_add'  %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:accounts_debit'  %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Accounts Credit -->
+                    <tr>
+                        <td><a href="{% url 'accounting:accounts_credit'  %}">Accounts Credit</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:accounts_credit_add'  %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:accounts_credit'  %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Bakery General Ledger -->
+                    <tr>
+                        <td><a href="{% url 'accounting:department_general_ledger' 'bakery' %}">Bakery General Ledger</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:department_general_ledger_add' 'bakery' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:department_general_ledger' 'bakery' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Supermarket General Ledger -->
+                    <tr>
+                        <td><a href="{% url 'accounting:department_general_ledger' 'supermarket' %}">Supermarket General Ledger</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:department_general_ledger_add' 'supermarket' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:department_general_ledger' 'supermarket' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Boulangerie General Ledger -->
+                    <tr>
+                        <td><a href="{% url 'accounting:department_general_ledger' 'boulangerie' %}">Boulangerie General Ledger</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:department_general_ledger_add' 'boulangerie' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:department_general_ledger' 'boulangerie' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Bar General Ledger -->
+                    <tr>
+                        <td><a href="{% url 'accounting:department_general_ledger' 'bar' %}">Bar General Ledger</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'accounting:department_general_ledger_add' 'bar' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'accounting:department_general_ledger' 'bar' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+
+        
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- END: Content -->
+
+{% endblock content %}

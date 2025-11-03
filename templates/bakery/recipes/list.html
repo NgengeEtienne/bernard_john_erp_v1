@@ -1,0 +1,65 @@
+{% extends "base2.html" %}
+{% load static %}
+{% block title %} Product Recipes {% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="product-recipe-list">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Product Recipes</h1>
+                        <br>
+                        <a href="{% url 'bakery:reciperawmaterial-list' %}" class="btn btn-primary">Back to Recipe Output</a>
+                        <a href="{% url 'bakery:recipes_add' %}" class="btn btn-info">Add Recipes</a>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Recipe Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for recipe in recipes %}
+                                            <tr>
+                                                <td>{{ recipe.id }}</td>
+                                                <td>{{ recipe.recipe_name }}</td>
+                                                <td>
+                                                    <a href="{% url 'bakery:recipes_edit' recipe.id %}" class="btn btn-warning btn-md">Edit</a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="5">No product recipes found.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination">
+                                {% if is_paginated %}
+                                    {% if page_obj.has_previous %}
+                                        <a href="?page=1" class="page-link">First</a>
+                                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+                                    {% endif %}
+                                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} </span>
+                                    {% if page_obj.has_next %}
+                                        <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+                                        <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Last</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

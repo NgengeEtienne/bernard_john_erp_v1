@@ -1,0 +1,264 @@
+
+{% extends '../../base2.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{%block title %}
+{% if payment_details.pk %}
+    Edit  Payment
+{% else %}
+Add Payment
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="content-body">
+    <!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">{% if payment_details.pk %}
+                            Edit 
+                        {% else %}
+                        Add 
+                        {% endif %}Payment Form</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p></p>
+                            </div>
+
+                            <form class="form" method="post" novalidate action="{% if payment_details.pk %}{% url 'bakery:edit-payment' payment_details.pk %}{% else %}{% url 'bakery:add-payment' %}{% endif %}">
+                                {% csrf_token %}
+  
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Date</label>
+                                            {% render_field form.date class="form-control" placeholder="Date Created" required="required" readonly="readonly"%}
+                                        </div>
+                                    </div>
+  
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Invoice</label>
+                                            {% render_field form.invoice class="form-control" placeholder="Invoice number" required="required" id="id_invoice" %}
+                                        </div>
+                                    </div>
+  
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Customer</label>
+                                            {% if not payment_details.pk %}
+                                            <input type="text" id="id_customer" class="form-control customer" placeholder="Customer" readonly="readonly" required="required"/>
+                                            {% else %}
+                                            {% render_field form.customer class="form-control" placeholder="Customer" required="required" id="id_customer" %}
+                                            {% endif %}
+                                            
+  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Sales Person</label>
+                                            {% if not payment_details.pk %}
+                                            <input type="text" id="id_sales_person" class="form-control SalesPerson" placeholder="Sales Person" readonly="readonly" required="required"/>
+                                            {% else %}
+                                            <input type="text" id="id_sales_person" class="form-control SalesPerson" placeholder="Sales Person" value="{{payment_details.invoice.sales_person}}" readonly="readonly" required="required"/>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Session</label>
+                                            {% if not payment_details.pk %}
+                                            <input type="text" id="id_session" class="form-control Session" placeholder="Session" readonly="readonly" required="required"/>
+                                            {% else %}
+                                            <input type="text" id="id_sales_person" class="form-control SalesPerson" placeholder="Sales Person" value="{{payment_details.invoice.sales_session}}" readonly="readonly" required="required"/>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            
+                                            {% if not payment_details.pk %}
+                                            <label for="projectinput1">Invoice Amount Left to Pay</label>
+                                            <input type="text" id="id_invoice_amount" class="form-control id_invoice_amount" placeholder="Invoice Amount" readonly="readonly" required="required"/>
+                                            {% else %}
+                                            <label for="projectinput1">Invoice Amount</label>
+                                            <input type="text" id="id_sales_person" class="form-control SalesPerson" placeholder="Sales Person" value="{{payment_details.invoice.invoice_total}}" readonly="readonly" required="required"/>
+                                            {% endif %}
+                                            
+
+  
+                                        </div>
+                                    </div>
+                                </div>
+  
+                                <div class="row">
+                                    
+  
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Installment</label>
+                                            {% render_field form.payment_installment class="form-control" placeholder="Date Created" required="required"%}
+                                        </div>
+                                    </div>
+  
+                                
+  
+                                
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Employee</label>
+                                            {% render_field form.employee class="form-control" placeholder="Collector" required="required"%}
+                                        </div>
+                                    </div>
+  
+                                
+  
+                               
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Amount Paid</label>
+                                            {% render_field form.amount_paid class="form-control" placeholder="Amount" required="required" %}
+                                        </div>
+                                    </div>
+  
+                                </div>
+  
+                              {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% for error in field.errors %}
+                                                    <li>{{ field.label }}: {{ error }}</li>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                  <div class="form-actions">
+                                    <a href="{% url 'bakery:invoice-payments' %}">
+                                      <button type="button" class="btn btn-warning mr-1">
+                                          <i class="ft-x"></i> Cancel
+                                      </button>
+                                    </a>
+                                      <button type="submit" class="btn btn-primary">
+                                          <i class="la la-check-square-o"></i> Save
+                                      </button>
+                                  </div>
+
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+ 
+
+
+
+
+
+
+    </section>
+    <!-- // Basic form layout section end -->
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+    <!-- END: Footer-->
+ 
+{% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+   $(document).ready(function() {
+    $('#id_invoice').selectize({
+        create: false,
+        sortField: {
+            field: 'text',
+            direction: 'asc'
+        }
+    });
+    $('.selectize-input').addClass('form-control');
+});
+ 
+
+function fetchProductPriceByName(productId, customer,price,SalesPerson,Session){
+    console.log("in get name");
+    $.ajax({
+        url: '{% url 'bakery:get_customer_name' %}',
+        data: {
+            'product_id': productId
+        },
+        dataType: 'json',
+        success: function(data) {
+            // console.log(data);
+            if (data && data.remaining && data.id) {
+                console.log("data:", data);
+                console.log("customer:", data.customer_name);
+                console.log("price:", data.remaining);
+                console.log("SalesPerson:", data.sales_person);
+                console.log("Session:", data.session);
+                customer.val(data.customer_name);
+                price.val(data.remaining);
+                customer.attr('placeholder', data.id);
+                SalesPerson.val(data.salesperson);
+                Session.val(data.session);
+                //console.log(data.price);
+                //console.log("get success");
+                //calcTotal(); // Make sure calcTotal() is defined elsewhere
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", jqXHR, textStatus, errorThrown);
+        }
+    });
+}
+
+// Event listener for product change
+$(document).on('change', 'select[name="invoice"]', function() {
+    var productId = $(this).val();
+    console.log(productId);
+    var customer = $('.customer');
+    var price = $('.id_invoice_amount');
+    var SalesPerson=$('.SalesPerson');
+    var Session=$('.Session');  
+    // console.log(customer);
+    // console.log(price);
+    // console.log(SalesPerson);
+    // console.log(Session);  
+    fetchProductPriceByName(productId, customer,price,SalesPerson,Session);
+});
+
+</script>
+
+
+{% endblock %}

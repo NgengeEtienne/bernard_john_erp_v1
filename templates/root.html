@@ -1,0 +1,696 @@
+{% extends 'base2.html' %}
+{% block title %} Departments {% endblock title %}
+
+
+{% block content %}   
+{% comment %} <style> .tt{ background-color: white}</style>   {% endcomment %}
+<!-- BEGIN: Content -->
+{% load static %}
+<section class="row all-contacts tt ">
+    <div class="col-12 card p-4" style="background-color:#f0f0f0">
+        <h4 class="card-title">Departments</h4>       
+       
+        
+       
+        <div class="container card-head">
+            <div class="row">
+                <!-- Accounting Card -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <div class="card-header">
+                            <h5 class="m-0">Accounting</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <!-- Accounts Category -->
+                                    <tr>
+                                        <td><a href="{% url 'accounting:accounts_category' %}">Accounts Category</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:accounts_category_add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:accounts_category' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        
+                                    <!-- Accounts Sub Category -->
+                                    <tr>
+                                        <td><a href="{% url 'accounting:accounts_sub_category'  %}">Accounts Sub Category</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:accounts_sub_category_add'  %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:accounts_sub_category'  %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        
+                                    <!-- Accounts Debit -->
+                                    <tr>
+                                        <td><a href="{% url 'accounting:accounts_debit'  %}">Accounts Debit</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:accounts_debit_add'  %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:accounts_debit'  %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        
+                                    <!-- Accounts Credit -->
+                                    <tr>
+                                        <td><a href="{% url 'accounting:accounts_credit'  %}">Accounts Credit</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:accounts_credit_add'  %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:accounts_credit'  %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        
+                                    <!-- Bakery General Ledger -->
+                                    <tr>
+                                        <td><a href="{% url 'accounting:department_general_ledger' 'bakery' %}">Bakery General Ledger</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:department_general_ledger_add' 'bakery' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:department_general_ledger' 'bakery' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        
+                                    <!-- Supermarket General Ledger -->
+                                    <tr class="hidden-row card-2-hidden" style="display: none;">
+                                        <td><a href="{% url 'accounting:department_general_ledger' 'supermarket' %}">Supermarket General Ledger</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:department_general_ledger_add' 'supermarket' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:department_general_ledger' 'supermarket' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        
+                                    <!-- Boulangerie General Ledger -->
+                                    <tr class="hidden-row card-2-hidden" style="display: none;">
+                                        <td><a href="{% url 'accounting:department_general_ledger' 'boulangerie' %}">Boulangerie General Ledger</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:department_general_ledger_add' 'boulangerie' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:department_general_ledger' 'boulangerie' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        
+                                    <!-- Bar General Ledger -->
+                                    <tr class="hidden-row card-2-hidden" style="display: none;">
+                                        <td><a href="{% url 'accounting:department_general_ledger' 'bar' %}">Bar General Ledger</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'accounting:department_general_ledger_add' 'bar' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'accounting:department_general_ledger' 'bar' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="javascript:void(0);" id="readMoreBtn2" class="btn btn-link">Read More</a>
+
+                        </div>
+                    </div>
+                </div> 
+                <!-- Boulangerie Card -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <div class="card-header">
+                            <h5 class="m-0">Boulangerie</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <!-- Invoices -->
+                                    <tr>
+                                        <td><a href="{% url 'boulangerie:invoice' %}">Invoices</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:create-invoice' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:invoice' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                   
+                                    <!-- Purchases -->
+                                    <tr>
+                                        <td><a href="{% url 'boulangerie:purchases' %}">Purchases</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    
+                                
+                                  
+                                
+                                    <!-- Customers -->
+                                    <tr>
+                                        <td><a href="{% url 'boulangerie:customer' %}">Customers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:customer-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:customer' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Categories -->
+                                    <tr>
+                                        <td><a href="{% url 'boulangerie:category-list' %}">Categories</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:category-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:category-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Suppliers -->
+                                    <tr>
+                                        <td><a href="{% url 'boulangerie:supplier' %}">Suppliers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <tr class="hidden-row card-3-hidden" style="display: none;">
+                                        <td><a href="{% url 'boulangerie:product-list' %}">Products</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:product-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:product-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr  class="hidden-row card-3-hidden" style="display: none;">
+                                        <td><a href="{% url 'boulangerie:Inventories' %}">Inventories</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:create_Inventory' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:Inventories' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Customer Opening Balance -->
+                                    <tr class="hidden-row card-3-hidden" style="display: none;">
+                                        <td><a href="{% url 'boulangerie:customer-opening-balance-list' %}">Customer Opening Balance</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'boulangerie:customer-opening-balance-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'boulangerie:customer-opening-balance-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="javascript:void(0);" id="readMoreBtn3" class="btn btn-link">Read More</a>
+
+                        </div>
+                    </div>
+                </div> 
+        
+                <!-- Wholesale Card -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <div class="card-header">
+                            <h5 class="m-0">Wholesale</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <!-- Invoices -->
+                                    <tr>
+                                        <td><a href="{% url 'wholesale:invoice' %}">Invoices</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'wholesale:create-invoice' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'wholesale:invoice' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                   
+                                    <!-- Purchases -->
+                                    <tr>
+                                        <td><a href="{% url 'wholesale:purchases' %}">Purchases</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'wholesale:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'wholesale:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    
+                                
+                                  
+                                
+                                    <!-- Customers -->
+                                    <tr>
+                                        <td><a href="{% url 'wholesale:customer' %}">Customers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'wholesale:customer-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'wholesale:customer' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Categories -->
+                                    <tr>
+                                        <td><a href="{% url 'wholesale:category-list' %}">Categories</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'wholesale:category-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'wholesale:category-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Suppliers -->
+                                    <tr>
+                                        <td><a href="{% url 'wholesale:supplier' %}">Suppliers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'wholesale:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'wholesale:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'wholesale:product-list' %}">Products</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'wholesale:product-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'wholesale:product-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Customer Opening Balance -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'wholesale:customer-opening-balance-list' %}">Customer Opening Balance</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'wholesale:customer-opening-balance-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'wholesale:customer-opening-balance-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
+        
+                <!-- Bar Card -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <div class="card-header">
+                            <h5 class="m-0">Bar</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tbody>
+                                        <tr>
+                                            <td><a href="{% url 'bar:category-list' %}">Categories</a></td>
+                                            <td>
+                                                <div class="btn-group float-right">
+                                                    <a href="{% url 'bar:category-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                    <a href="{% url 'bar:category-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="{% url 'bar:Inventories' %}">Inventories</a></td>
+                                            <td>
+                                                <div class="btn-group float-right">
+                                                    <a href="{% url 'bar:create_Inventory' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                    <a href="{% url 'bar:Inventories' %}" class="btn btn-xs btn-info changelink">View</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="{% url 'bar:supplier' %}">Suppliers</a></td>
+                                            <td>
+                                                <div class="btn-group float-right">
+                                                    <a href="{% url 'bar:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                    <a href="{% url 'bar:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="{% url 'bar:product-list' %}">Products</a></td>
+                                            <td>
+                                                <div class="btn-group float-right">
+                                                    <a href="{% url 'bar:product-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                    <a href="{% url 'bar:product-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="{% url 'bar:purchases' %}">Purchases</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bar:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bar:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
+        
+                <!-- Supermarket Card -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <div class="card-header">
+                            <h5 class="m-0">Supermarket</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td><a href="{% url 'supermarket:invoice' %}">Invoices</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'supermarket:create-invoice' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'supermarket:invoice' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="{% url 'supermarket:purchases' %}">Purchases</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'supermarket:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'supermarket:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="{% url 'supermarket:add-returns' %}">Returns</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'supermarket:add-returns' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'supermarket:add-returns' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="{% url 'supermarket:customer-list' %}">Customers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'supermarket:customer-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'supermarket:customer-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="{% url 'supermarket:supplier' %}">Suppliers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'supermarket:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'supermarket:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Bakery Card -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <div class="card-header">
+                            <h5 class="m-0">Bakery</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <!-- Invoices -->
+                                    <tr>
+                                        <td><a href="{% url 'bakery:invoice' %}">Invoices</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:create-invoice' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:invoice' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Production -->
+                                    <tr>
+                                        <td><a href="{% url 'bakery:production' %}">Production</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:create-production' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:production' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Purchases -->
+                                    <tr>
+                                        <td><a href="{% url 'bakery:purchases' %}">Purchases</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Inventories -->
+                                    <tr>
+                                        <td><a href="{% url 'bakery:Inventories' %}">Inventories</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:create_Inventory' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:Inventories' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Returns -->
+                                    <tr>
+                                        <td><a href="">Returns</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Customers -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:customer' %}">Customers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:customer-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:customer' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Categories -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:category-list' %}">Categories</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:category-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:category-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Suppliers -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:supplier' %}">Suppliers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Products -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:product-list' %}">Products</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:product-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:product-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Product Recipes -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:productrecipe-list' %}">Product Recipes</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:productrecipe-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:productrecipe-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Raw Materials -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:raw-materials-list' %}">Raw Materials</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:raw-materials-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:raw-materials-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Recipe Raw Materials -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:reciperawmaterial-list' %}">Recipe Raw Materials</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:reciperawmaterial-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:reciperawmaterial-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                    <!-- Customer Opening Balance -->
+                                    <tr class="hidden-row card-4-hidden" style="display: none;">
+                                        <td><a href="{% url 'bakery:customer-opening-balance-list' %}">Customer Opening Balance</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:customer-opening-balance-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:customer-opening-balance-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hidden-row" style="display: none;">
+                                        <td><a href="{% url 'bakery:damages' %}">Damages</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bakery:create-damages' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bakery:damages' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+                            <a href="javascript:void(0);" id="readMoreBtn4" class="btn btn-link">Read More</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+
+        
+        
+    </div>
+
+</section>
+
+<!-- END: Content -->
+
+    {% endblock content %}
+    {% block custom_js %}
+
+    <script>
+        // Card 1 Read More/Collapse
+        document.getElementById('readMoreBtn2').addEventListener('click', function() {
+            var hiddenRows = document.querySelectorAll('.card-2-hidden');
+            hiddenRows.forEach(function(row) {
+                if (row.style.display === 'none') {
+                    row.style.display = '';
+                    document.getElementById('readMoreBtn2').textContent = 'Collapse ';
+                } else {
+                    row.style.display = 'none';
+                    document.getElementById('readMoreBtn2').textContent = 'Read More ';
+                }
+            });
+        });
+    
+        // Card 2 Read More/Collapse
+        document.getElementById('readMoreBtn3').addEventListener('click', function() {
+            var hiddenRows = document.querySelectorAll('.card-3-hidden');
+            hiddenRows.forEach(function(row) {
+                if (row.style.display === 'none') {
+                    row.style.display = '';
+                    document.getElementById('readMoreBtn3').textContent = 'Collapse ';
+                } else {
+                    row.style.display = 'none';
+                    document.getElementById('readMoreBtn3').textContent = 'Read More ';
+                }
+            });
+        });
+        
+        // Card 3 Read More/Collapse
+        document.getElementById('readMoreBtn4').addEventListener('click', function() {
+            var hiddenRows = document.querySelectorAll('.card-4-hidden');
+            hiddenRows.forEach(function(row) {
+                if (row.style.display === 'none') {
+                    row.style.display = '';
+                    document.getElementById('readMoreBtn4').textContent = 'Collapse ';
+                } else {
+                    row.style.display = 'none';
+                    document.getElementById('readMoreBtn4').textContent = 'Read More ';
+                }
+            });
+        });
+        
+        // Card 4 Read More/Collapse
+        document.getElementById('readMoreBtnInventory').addEventListener('click', function() {
+            var hiddenRows = document.querySelectorAll('.card-5-hidden');
+            hiddenRows.forEach(function(row) {
+                if (row.style.display === 'none') {
+                    row.style.display = '';
+                    document.getElementById('readMoreBtnInventory').textContent = 'Collapse ';
+                } else {
+                    row.style.display = 'none';
+                    document.getElementById('readMoreBtnInventory').textContent = 'Read More ';
+                }
+            });
+        });
+        
+        // Card 5 Read More/Collapse
+        document.getElementById('readMoreBtnOperations').addEventListener('click', function() {
+            var hiddenRows = document.querySelectorAll('.card-6-hidden');
+            hiddenRows.forEach(function(row) {
+                if (row.style.display === 'none') {
+                    row.style.display = '';
+                    document.getElementById('readMoreBtnOperations').textContent = 'Collapse ';
+                } else {
+                    row.style.display = 'none';
+                    document.getElementById('readMoreBtnOperations').textContent = 'Read More ';
+                }
+            });
+        });
+        
+        // Repeat the same for the other cards (Card 3, Card 4, etc.)
+    </script>
+    {% endblock custom_js %}

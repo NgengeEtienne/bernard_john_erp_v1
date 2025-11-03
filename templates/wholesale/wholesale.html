@@ -1,0 +1,127 @@
+
+        {% extends '../base2.html' %}
+{% block title %} Bar Details {% endblock title %}
+
+
+{% block content %}   
+{% comment %} <style> .tt{ background-color: white}</style>   {% endcomment %}
+<!-- BEGIN: Content -->
+{% load static %}
+<section class="row all-contacts tt p-4">
+    <div class="col-12">
+        
+       
+        
+       
+        <div class="container">
+            <div class="row">
+
+
+<!-- Wholesale Card -->
+<div class="col-md-6 col-sm-12 mb-4">
+    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+        <div class="card-header">
+            <h5 class="m-0">Wholesale</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <tbody>
+                    <!-- Invoices -->
+                    <tr>
+                        <td><a href="{% url 'wholesale:invoice' %}">Invoices</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'wholesale:create-invoice' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'wholesale:invoice' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                   
+                    <!-- Purchases -->
+                    <tr>
+                        <td><a href="{% url 'wholesale:purchases' %}">Purchases</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'wholesale:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'wholesale:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    
+                
+                  
+                
+                    <!-- Customers -->
+                    <tr>
+                        <td><a href="{% url 'wholesale:customer' %}">Customers</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'wholesale:customer-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'wholesale:customer' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Categories -->
+                    <tr>
+                        <td><a href="{% url 'wholesale:category-list' %}">Categories</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'wholesale:category-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'wholesale:category-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <!-- Suppliers -->
+                    <tr>
+                        <td><a href="{% url 'wholesale:supplier' %}">Suppliers</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'wholesale:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'wholesale:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td><a href="{% url 'wholesale:product-list' %}">Products</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'wholesale:product-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'wholesale:product-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Customer Opening Balance -->
+                    <tr>
+                        <td><a href="{% url 'wholesale:customer-opening-balance-list' %}">Customer Opening Balance</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'wholesale:customer-opening-balance-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'wholesale:customer-opening-balance-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+
+        
+
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- END: Content -->
+
+    {% endblock content %}

@@ -1,0 +1,72 @@
+{% extends 'base2.html' %}
+{% block title %} bar general ledger edits {% endblock title %}
+
+{% block content %}
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search bar general ledger edits...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header">
+                                    <h1>Accounts Sub Categories</h1>
+                                    <a href="{% url 'accounting:accounts_debit' %}" class="btn btn-info mb-3">Account Debit</a>
+                                    
+                                    <a href="{% url 'accounting:accounts_credit' %}" class="btn btn-primary mb-3">AccountCredit</a>
+    <a href="{% url 'accounting:accounts_sub_category_add' %}" class="btn btn-primary mb-3">Add New Sub Category</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Accounts Category</th>
+                <th>Accounts Sub Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sub_category in sub_categories %}
+                <tr>
+                    <td>{{ sub_category.accounts_category }}</td>
+                    <td>{{ sub_category.account_sub_category }}</td>
+                    <td>
+                        <a href="{% url 'accounting:accounts_sub_category_edit' sub_category.pk %}" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,143 @@
+{% extends 'base2.html' %}
+{% block title %} Suppliers {% endblock title %}
+
+
+{% block content %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <div class="content-overlay"></div>
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search contacts...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header">
+                                    <h4 class="card-title">All Suppliers</h4>
+                                    <div class="heading-elements mt-0">
+                                        <a href="{% url 'bar:create-supplier'%}" class="btn btn-primary btn-md " ><i class="d-md-none d-block ft-plus white"></i>
+                                            <span class="d-md-block d-none">Add Supplier</span></a>
+                                        
+
+                                        <!-- Edit Contact -->
+
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <!-- Task List table -->
+                                    
+                                    <div class="table-responsive">
+                                        <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Supplier</th>
+                                                    <th>Supplier Type</th>
+                                                    <th>Company</th>
+                                                    <th>Tel</th>
+                                                    <th>Email</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                              {% for supplier in suppliers %}
+                                                <tr>
+                                                  <!--  <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="checkboxsmall1">
+                                                            <label class="custom-control-label" for="checkboxsmall1"></label>
+                                                        </div>
+                                                    </td> -->
+
+                                                    <td>
+                                                            <div class="media-body media-middle">
+                                                                <a href="{% url 'bar:supplier-details' supplier.id %}" class="media-heading name">{{supplier.supplier_name}}</a>
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                            <div class="media-body media-middle">
+                                                                <a class="media-heading name">{{supplier.supplier_type}}</a>
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                            <div class="media-body media-middle">
+                                                                <a  class="media-heading name">{{supplier.company_name}}</a>
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                            <div class="media-body media-middle">
+                                                                <a class="media-heading name">{{supplier.phone1}}</a>
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                            <div class="media-body media-middle">
+                                                                <a class="media-heading name">{{supplier.email}}</a>
+                                                            </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <a href="{{bakery.get_absolute_url}}" class="secondary  mr-1"><i class="la la-eye"></i></a>
+                                                        <a href="{% url 'bar:edit-supplier' supplier.id %}" data-toggle="" data-target="" class="primary edit mr-1"><i class="la la-pencil"></i></a>
+                                                        <a class="danger delete mr-1"><i class="la la-trash-o"></i></a>
+
+
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                  <th>Supplier</th>
+                                                  <th>Supplier Type</th>
+                                                  <th>Company</th>
+                                                  <th>Tel</th>
+                                                  <th>Email</th>
+                                                  <th>Actions</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+
+{% endblock content %}

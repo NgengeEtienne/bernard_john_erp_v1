@@ -1,0 +1,406 @@
+{% extends 'base2.html' %}
+{% block title %} Production List {% endblock title %}
+
+
+{% block content %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <div class="content-overlay"></div>
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search contacts...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header mb-4">
+                                    <h4 class="card-title">All production</h4>
+                                    <div class="heading-elements mx-4">
+                                        <!-- New button added here, aligned to the left -->
+                                        <a href="{% url 'bakery:productioin_output' %}" >
+                                            <button class="btn btn-success btn-md " data-toggle="modal" data-target="">
+                                                
+                                                <span class="d-md-block d-none"><i class="la la-plus"></i> Production Output </span>
+                                            </button>
+                                        </a>
+                                        <a href="{% url 'bakery:production_report' %}" >
+                                            <button class="btn btn-secondary btn-md " data-toggle="modal" data-target="">
+                                                
+                                                <span class="d-md-block d-none"><i class="la la-plus"></i> Production Report </span>
+                                            </button>
+                                        </a>
+                                       
+                                        
+                                        <!-- Existing button on the right -->
+                                        <a href="{% url 'bakery:create-production' %}">
+                                            <button class="btn btn-primary btn-md " data-toggle="modal" data-target="">
+                                                <i class="d-md-none d-block ft-plus white"></i>
+                                                <span class="d-md-block d-none"><i class="la la-plus"></i> Add Production </span>
+                                            </button>
+                                        </a>  
+                                    </div>
+                                </div>
+                        
+                                <section id="Production details">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title float-left"></h4>
+                                                <form id="filter-form">
+                                                    <div class="form-row">
+                                                        <!-- Start Date Filter -->
+                                                        <div class="form-group col-md-2 col-lg-2">
+                                                            <label for="start_date">Start Date</label>
+                                                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
+                                                        </div>
+                                                        <!-- End Date Filter -->
+                                                        <div class="form-group col-md-2 col-lg-2">
+                                                            <label for="end_date">End Date</label>
+                                                            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
+                                                        </div>
+                                                        <!-- Production ID Filter -->
+                                                        <div class="form-group col-md-2 col-lg-2">
+                                                            <label for="production_id">Production ID</label>
+                                                            <input type="text" class="form-control" id="production_id" name="production_id" placeholder="Production ID" value="{{ production_id }}">
+                                                        </div>
+                                                        <!-- Raw Material Filter -->
+                                                        <div class="form-group col-md-2 col-lg-2">
+                                                            <label for="raw_material">Raw Material</label>
+                                                            <input type="text" class="form-control" id="raw_material" name="raw_material" placeholder="Raw Material" value="{{ raw_material }}">
+                                                        </div>
+                                                        <!-- Supervisor Filter -->
+                                                        <div class="form-group col-md-2 col-lg-2">
+                                                            <label for="supervisor">Supervisor</label>
+                                                            <input type="text" class="form-control" id="supervisor" name="supervisor" placeholder="Supervisor" value="{{ supervisor }}">
+                                                        </div>
+                                                        <!-- Stock Supervisor Filter -->
+                                                        <div class="form-group col-md-2 col-lg-2">
+                                                            <label for="stock_supervisor">Stock Supervisor</label>
+                                                            <input type="text" class="form-control" id="stock_supervisor" name="stock_supervisor" placeholder="Stock Supervisor" value="{{ stock_supervisor }}">
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fas fa-search"></i> Search
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            
+
+
+                            <div class="card-content">
+                            
+                                <div class="card-body">
+                                    <!-- Task List table -->
+                                    <ul class="nav nav-tabs nav-justified" id="myTab2" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="production-tab" data-toggle="tab" href="#production" role="tab" aria-controls="production" aria-selected="true">
+                                                <i class="fas fa-chart-pie fa-fw me-2"></i>Production
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="raw-material-usage-tab" data-toggle="tab" href="#raw-material-usage" role="tab" aria-controls="raw-material-usage" aria-selected="false">
+                                                <i class="fas fa-boxes fa-fw me-2"></i>Raw Material Usage
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="production-output-tab" data-toggle="tab" href="#production-output" role="tab" aria-controls="production-output" aria-selected="false">
+                                                <i class="fas fa-industry fa-fw me-2"></i>Production Output
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    
+
+                                    <div class="tab-content" id="myTab2Content">
+                                        <div class="tab-pane fade show active" id="production" role="tabpanel" aria-labelledby="production-tab">
+                                            <div class="table-responsive">
+                                                <table id="productions-table" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Department</th>
+                                                            <th>Production Id</th>
+                                                            <th>Sub Department</th>
+                                                            <th>Session</th>
+                                                            <th>Supervisior</th>
+                                                            <th>Stock Supervisor</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        
+ 
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Department</th>
+                                                            <th>Production Id</th>
+                                                            <th>Sub Department</th>
+                                                            <th>Session</th>
+                                                            <th>Supervisior</th>
+                                                            <th>Stock Supervisor</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane show fade" id="raw-material-usage" role="tabpanel" aria-labelledby="raw-material-usage-tab">
+                                            <div class="table-responsive">
+                                                <table id="raw-material-table" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Production ID</th>
+                                                            <th>Supervisor</th>
+                                                            <th>Sub Department</th>
+                                                            <th>Raw Material</th>
+                                                            <th>Status</th>
+                                                            <th>Qty</th>
+                                                            <th>Price</th>
+                                                            <th>RM Value</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        
+                                                        </tbody>
+                                                        
+                                                    <tfoot>
+                                                        </tr>
+                                                            <th colspan="8" class="text-right">Total Value:</th>
+                                                            <th class="text-right" id="raw-material-total">0 cfa</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="production-output" role="tabpanel" aria-labelledby="production-output-tab">
+                                            <div class="table-responsive">
+                                                <table id="outputs-table"
+                                                    class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Production ID</th>
+                                                            <th>Supervisor</th>
+                                                            <th>Sub Department</th>
+                                                            <th>Category</th>
+                                                            <th>Product</th>
+                                                            <th>Mixture number</th>
+                                                            <th>Qauntity</th>
+                                                            <th>Price</th>
+                                                            <th>Amount</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                       
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="9" class="text-right">Total Output Value:</th>
+                                                            <th class="text-right" id="output-total">0 cfa</th> <!-- Total for Output -->
+                                                        </tr>
+                                                        
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+<script>
+    $(document).ready(function () {
+    $('#filter-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const startDate = $('#start_date').val();
+        const endDate = $('#end_date').val();
+        const productionId = $('#production_id').val();
+        const supervisor = $('#supervisor').val();
+        const stockSupervisor = $('#stock_supervisor').val();
+        run(startDate,endDate,productionId,supervisor,stockSupervisor);
+        
+
+    });
+
+    run();
+});
+
+
+function run(startDate=null,endDate=null,productionId=null,supervisor=null,stockSupervisor=null){
+        $.ajax({
+            url: '/bakery/bakery_production_list/', // Replace with your view URL
+            type: 'GET',
+            data: {
+                start_date: startDate,
+                end_date: endDate,
+                production_id: productionId,
+                supervisor: supervisor,
+                stock_supervisor: stockSupervisor,
+            },
+            success: function (response) {
+                console.log(response)
+                if (response.success) {
+                    const productionsTableBody = $('#productions-table tbody');
+                    const rawMaterialTableBody = $('#raw-material-table tbody');
+                    const outputsTableBody = $('#outputs-table tbody');
+                    const rawMaterialTotal = $('#raw-material-total');
+                    const outputTotal = $('#output-total');
+
+                    productionsTableBody.empty();
+                    rawMaterialTableBody.empty();
+                    outputsTableBody.empty();
+                    rawMaterialTotal.empty();
+                    outputTotal.empty();
+
+                    // Populate productions table
+                    response.productions.forEach((production) => {
+                        productionsTableBody.append(`
+                            <tr>
+                            <td>
+                                <div class="media-body media-middle">
+                                    <a class="media-heading name">${production.created_at}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="media-body media-middle">
+                                    <a href="${production.customer_url}" class="media-heading name">${production.department}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="media-body media-middle">
+                                    <a href="/bakery/production/${production.id}/view/" class="media-heading name">${production.production_id}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="media-body media-middle">
+                                    <a class="media-heading name">${production.sub_department__sub_department_name}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="media-body media-middle">
+                                    <a class="media-heading name">${production.session}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="media-body media-middle">
+                                    <a class="media-heading name">${production.supervisor}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="media-body media-middle">
+                                    <a class="media-heading name">${production.stock_supervisor}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="/bakery/production/edit/${production.id}/" class="primary edit mr-1"><i class="la la-pencil"></i></a>
+                                <a class="danger delete mr-1"><i class="la la-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        `);
+                    });
+
+                    // Populate raw material usages table
+                    response.raw_material_usages.forEach((usage) => {
+                        rawMaterialTableBody.append(`
+                            <tr>
+                                <td>${usage.production_id__created_at}</td>
+                                <td>${usage.production_id__production_id}</td>
+                                <td>${usage.production_id__supervisor}</td>
+                                <td>${usage.production_id__sub_department__sub_department_name}</td>
+                                <td>${usage.raw_material__raw_material_name}</td>
+                                <td>${usage.status}</td>
+                                <td>${usage.qty}</td>
+                                <td>${usage.unit_cost_price} cfa</td>
+                                <td>${parseFloat(usage.raw_material_value).toFixed(0)}</td>
+                            </tr>
+                        `);
+                    });
+
+                    // Populate outputs table
+                    response.outputs.forEach((output) => {
+                        outputsTableBody.append(`
+                            <tr>
+                                <td>${output.production_id__created_at}</td>
+                                <td>${output.production_id__production_id}</td>
+                                <td>${output.production_id__supervisor}</td>
+                                <td>${output.production_id__sub_department__sub_department_name}</td>
+                                <td>${output.output_category}</td>
+                                <td>${output.product__product_name}</td>
+                                <td>${output.mixture_number}</td>
+                                <td>${output.qty}</td>
+                                <td>${output.product_price}</td>
+                                <td>${parseFloat(output.value).toFixed(0)}</td>
+                            </tr>
+                        `);
+                    });
+
+                    // Update totals
+                    rawMaterialTotal.html(`${response.total_raw_material_val.toLocaleString()} cfa`);
+                    outputTotal.html(`${response.total_output_value.toLocaleString()} cfa`);
+                    const startDate = $('#start_date');
+                    const endDate = $('#end_date');
+                    const productionId = $('#production_id');
+                    const supervisor = $('#supervisor');
+                    const stockSupervisor = $('#stock_supervisor');
+                    startDate.val(response.start_date);
+                    endDate.val(response.end_date);
+                    productionId.val(response.production_id);
+                    supervisor.val(response.supervisor);
+                    stockSupervisor.val(response.stock_supervisor);
+                } else {
+                    alert(response.error || 'Failed to fetch data.');
+                }
+            },
+
+            error: function (xhr) {
+                console.error(xhr.responseText);
+                alert('An error occurred while fetching the data.');
+            },
+        });
+    }
+</script>
+{% endblock content %}

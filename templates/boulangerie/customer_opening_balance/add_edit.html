@@ -1,0 +1,169 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% if object.pk %}
+        Edit Opening Balance
+    {% else %}
+        Add Opening Balance
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="content-body">
+    <section id="{% if object.pk %}edit-opening-balance{% else %}add-opening-balance{% endif %}">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if object.pk %}
+                                Edit Opening Balance
+                            {% else %}
+                                Add Opening Balance
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'boulangerie:customer-opening-balance-list' %}" class="btn btn-primary">Back to Opening Balances</a>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <!-- Date -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_date">Date</label>
+                                            {% render_field form.date class="form-control" placeholder="Select Date" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Customer -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_customer">Customer</label>
+                                            {% render_field form.customer class="form-control" placeholder="Select Customer" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Invoice -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_invoice">Invoice</label>
+                                            {% render_field form.invoice class="form-control" placeholder="Select Invoice" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Product -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_product">Product</label>
+                                            {% render_field form.product class="form-control" placeholder="Select Product" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Quantity -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_quantity">Quantity</label>
+                                            {% render_field form.quantity class="form-control" placeholder="Enter Quantity" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_price">Price</label>
+                                            {% render_field form.price class="form-control" placeholder="Enter Price" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                               
+
+                                <div class="form-actions">
+                                    <a href="{% url 'boulangerie:customer-opening-balance-list' %}">
+                                        <button type="button" class="btn btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> 
+                                        {% if object.pk %}
+                                            Update
+                                        {% else %}
+                                            Save
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}
+{% block custom_js %}
+    
+    
+    {% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+        // Initialize selectize for customer name
+        $('#id_product').selectize({
+                   create: false,
+                   sortField: {
+                       field: 'text',
+                       direction: 'asc'
+                   }
+               });
+               $('#id_customer').selectize({
+                   create: false,
+                   sortField: {
+                       field: 'text',
+                       direction: 'asc'
+                   }
+               });
+               $('#id_invoice').selectize({
+                   create: false,
+                   sortField: {
+                       field: 'text',
+                       direction: 'asc'
+                   }
+               });
+   </script>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base2.html' %}
+{% block title %}Customers Profile{% endblock title %}
+
+{% block content %}
+<style> .tt{ background-color: white}</style>  
+<!-- BEGIN: Content -->
+{% load static %}
+<div class="row gx-4">
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-header">Profile Picture</div>
+            <div class="card-body text-center">
+                <img src="{% static 'app-assets/images/portrait/small/avatar-s-19.png' %}" alt="" class="img-account-profile rounded-circle mb-2">
+                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                <button type="button" class="btn btn-primary">Upload new image</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header">Account Details</div>
+            <div class="card-body">
+             
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-3">
+                        <label for="id_username" class="small mb-1">Username (how your name will appear to other users on the site)</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="id_first_name" class="small mb-1">First name</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="id_last_name" class="small mb-1">Last name</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="id_email" class="small mb-1">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="id_tel" class="small mb-1">Telephone</label>
+                            {{ form.tel }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Content -->
+{% endblock content %}

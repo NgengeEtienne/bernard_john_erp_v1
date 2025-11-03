@@ -1,0 +1,137 @@
+{% extends 'base2.html' %}
+{% block title %} Customers {% endblock title %}
+
+{% block content %}
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search contacts...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header">
+                                    <h4 class="card-title">All Contacts</h4>
+                                    <div class="heading-elements mt-0">
+                                      <a href="{% url 'boulangerie:customer-add' %}">
+                                          <button  class="btn btn-primary btn-md"><i class="d-md-none d-block ft-plus white"></i>
+                                              <span class="d-md-block d-none"><i class="la la-user"></i>Add Customer</span>
+                                          </button>
+                                      </a>
+                                      <a href="{% url 'boulangerie:create-invoice' %}">
+                                        <button  class="btn btn-primary btn-md"><i class="d-md-none d-block ft-plus white"></i>
+                                            <span class="d-md-block d-none"><i class="la la-clipboard"></i>Add Invoice</span>
+                                        </button>
+                                      </a>
+                                      <a href="{% url 'boulangerie:add-payment' %}">
+                                          <button  class="btn btn-success btn-md"><i class="d-md-none d-block ft-plus white"></i>
+                                              <span class="d-md-block d-none"><i class="la la-money"></i> Add Payment</span>
+                                          </button>
+                                      </a>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Customer</th>
+                                                        <th>Customer Type</th>
+                                                        <th>Company</th>
+                                                        <th>Tel</th>
+                                                        <th>Email</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                  {% for customer in customers %}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media-body media-middle">
+                                                                <a href="{% url 'boulangerie:customer-detail' customer.slug %}" class="media-heading name">{{ customer.customer_name }}</a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="media-body media-middle">
+                                                                <a class="media-heading name">{{ customer.customer_type }}</a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="media-body media-middle">
+                                                                <a class="media-heading name">{{ customer.company_name }}</a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="media-body media-middle">
+                                                                <a class="media-heading name">{{ customer.phone }}</a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="media-body media-middle">
+                                                                <a class="media-heading name">{{ customer.email }}</a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{% url 'boulangerie:customer-detail' customer.slug %}" class="secondary mr-1"><i class="la la-eye"></i></a>
+                                                            <a href="{% url 'boulangerie:customer-edit' customer.slug %}" class="primary edit mr-1"><i class="la la-pencil"></i></a>
+                                                            <a class="danger delete mr-1"><i class="la la-trash-o"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                  {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pagination">
+                                            <span class="step-links">
+                                                {% if customers.has_previous %}
+                                                    <a href="?page=1">&laquo; first</a>
+                                                    <a href="?page={{ customers.previous_page_number }}">previous</a>
+                                                {% endif %}
+                                                
+                                                <span class="current">
+                                                    Page {{ customers.number }} of {{ customers.paginator.num_pages }}.
+                                                </span>
+
+                                                {% if customers.has_next %}
+                                                    <a href="?page={{ customers.next_page_number }}">next</a>
+                                                    <a href="?page={{ customers.paginator.num_pages }}">last &raquo;</a>
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

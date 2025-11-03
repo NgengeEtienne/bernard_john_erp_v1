@@ -1,0 +1,293 @@
+
+{% extends "base2.html" %}
+<!-- Content Row -->
+{% load widget_tweaks %}
+{% block title %}
+  {% if form.recipe.pk %} Edit Recipe Raw Material {% else %} Add Recipe Raw Material {% endif %}
+{% endblock title %}
+{% block content %}
+<div class="row">   
+   <style>
+    .table td:first-child input.form-control {
+        width: 700px;
+      }
+      
+      .table td:not(:first-child) input.form-control {
+        width: 100px;
+      }
+      td{
+        padding:auto 0px;
+      }
+
+    </style>
+
+     
+   
+    <div class="col-xl-12 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        {% if form.recipe.pk %} Edit Recipe Raw Material {% else %} Add Recipe Raw Material {% endif %}
+                    </h2>
+                    <a href="{% url 'bakery:reciperawmaterial-list' %}" class="btn btn-primary my-2">Back to Recipe Raw Materials</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'bakery:create-purchase' %}">
+                    {% csrf_token %}
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_date">Recipe</label>
+                                <!-- {{ form.recipe }} -->
+                                {% render_field formset.forms.0.recipe class="form-control" placeholder="Select Measure" %}
+                            </div>
+                        </div>
+                       
+                        
+                    </div>
+
+                     
+
+                    <div class="table form-table" style="border-top:0px">
+                        <table class="table table-striped" class="px-2">
+                            
+                            {% for form in formset %}
+                            <tr >
+                                
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_detail_product">Raw Material</label>
+                                    {% render_field form.raw_material class="form-control" placeholder="Select Raw Material" required="required"  %}
+                                </td>
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_detail_qty">Quantity (grams)</label>
+                                    {% render_field form.quantity_per_recipe class="form-control" style="width:70%" placeholder="Enter Quantity" %}
+                                </td>
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_detail_price">Measure</label>
+                                    {% render_field form.measure class="form-control" placeholder="Select Measure" %}
+                                </td>
+                                {% if recipe %}
+                                {{ form.id }}
+                                <td  class="py-2 m-0 delete-row">
+                                    <label class="form-label py-1" for="invoice_price">
+                                        <a class="danger  mr-1"><i class="la la-trash-o"></i></a>
+                                    </label>
+                                </td>
+                                {% else %} 
+                                <td  class="py-2 m-0">
+                                    <label class="form-label py-1" for="invoice_price">
+                                        <a class="muted mr-1"><i class="la la-trash-o"></i></a>
+                                    </label>
+                                </td>
+                                {% endif %}
+
+                                
+                                
+                            </tr>
+                            {% endfor %}
+                           
+                        </table>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-center">
+                        <input class="btn btn-outline-warning add-form-row" style="margin: 0 1em 0 1em; width: 40%" type="button" value="Add more product" id="add_more">
+                        <input class="btn btn-outline-success"  style="margin: 0 1em 0 1em; width: 40%" type="button" value="Submit" name="create-invoice">
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+ 
+{% endblock %}
+
+{% block custom_js %}
+    
+
+
+    {% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+        const productNames = [
+            //{ value: '1', text: 'gato' },
+            //{ value: 'product2', text: 'Product 2' },
+            //{ value: 'product3', text: 'Product 3' }
+            // Add more product names as needed
+        ];
+        
+        $(document).ready(function() {
+            // Initialize selectize for customer name
+            $('select[name$="recipe"]').selectize({
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+        
+            // Initialize selectize for product name and fetch options
+            var $select = $('select[name$="raw_material"]').selectize({
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+        
+            var selectizeControl = $select[0].selectize;
+        
+            // Fetch options and store in productNames array
+            var options = selectizeControl.options;
+            for (var key in options) {
+                if (options.hasOwnProperty(key)) {
+                    productNames.push({ value: key, text: options[key].text });
+                }
+            }
+        
+            // Function to initialize selectize for new rows
+            function initializeSelectize(row) {
+                row.find('select[name$="raw_material"]').each(function() {
+                    if ($(this)[0].selectize) {
+                        $(this)[0].selectize.destroy();
+                    }
+                    $(this).selectize({
+                        create: false,
+                        options: productNames,
+                        sortField: {
+                            field: 'text',
+                            direction: 'asc'
+                        }
+                    });
+                });
+                $('.selectize-input').addClass('form-control');
+            }
+        
+            // Event listener for Add More button
+            $('#add_more').click(function() {
+                $.ajax({
+                    url: "/bakery/add_more_row_recipe",  // Update with your URL
+                    method: 'GET',
+                    success: function(response) {
+                        var $newRow = $(response.row_html);
+                        $('table').append($newRow);
+                        initializeSelectize($newRow);
+                    }
+                });
+            });
+        
+            // Event listener for Delete button
+            $(document).on('click', '.delete-row', function() {
+                var row = $(this).parent();
+                row.find('input').val('');
+                row.find('.ptotal').text('0.00');
+                row.remove();
+                calcTotal(); // Recalculate the invoice_total if needed
+            });
+        
+           
+ 
+            
+            
+        
+            // Initialize Selectize for the initial visible rows
+            initializeSelectize($('.tr:first'));
+            $('.selectize-input').addClass('form-control');
+        });
+
+
+        $('.btn[name="create-invoice"]').click(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+        
+                // Initialize an array to hold error messages
+                var errors = [];
+
+                // Check required fields in the main form
+                var requiredFields = ['form-0-recipe']; // Add all required fields here
+
+                requiredFields.forEach(function(field) {
+                    var value = $(`input[name="${field}"], select[name="${field}"]`).val();
+                    if (!value) {
+                        errors.push(`The Recipe field is required.`);
+                    }
+                });
+
+            // Serialize the main form and formset data
+            var formData = $('form').serializeArray();
+            
+            // Initialize row count
+            var rowCount = 0;
+        
+            // Iterate through each row in the formset (each 'tr' element)
+            $('tr').each(function(index, element) {
+                // Increment the row count
+                rowCount++;
+        
+                // Serialize the inputs in each row
+                $(element).find('input, select').each(function() {
+                    var inputName = $(this).attr('name');
+                    var inputValue = $(this).val();
+        
+                    if (inputName) {
+                        // Check and rename the input name based on certain conditions
+                        if (inputName.includes("raw_material")) {
+                            inputName = `raw_material${rowCount}`;
+                        } else if (inputName.includes("quantity")) {
+                            inputName = `quantity_${rowCount}`;
+                        } else if (inputName.includes("-measure")){
+                            inputName = `measure_${rowCount}`;
+                        } else if (inputName.includes("-id")){
+                            inputName = `id_${rowCount}`;
+                        } 
+            
+                        // Push the renamed input name and its value into formData
+                        formData.push({
+                            name: inputName,
+                            value: inputValue
+                        });
+                    }
+                });
+
+            });
+        
+        
+            // Add row_count to the formData
+            formData.push({
+                name: "row_count",
+                value: rowCount
+            });
+        
+        if (errors.length > 0) {
+            // Display error messages to the user
+           
+            alert(errors.join('\n'));
+        } else {
+            //console.log("formdata is: ",formData);
+            $.ajax({
+                url: "{% if recipe %}{% url 'bakery:reciperawmaterial-edit' recipe %}{% else %}{% url 'bakery:reciperawmaterial-add' %}{% endif %}", // Update with your URL to handle form submission
+                type: "POST",
+                data: $.param(formData),
+                success: function(response) {
+                    // Handle successful submission
+                    console.log("Form submitted successfully:", response);
+                    //displayMessage("success", "Invoice created successfully!");
+                    //console.log(formData);
+                    window.location.href = "{% url 'bakery:reciperawmaterial-list' %}";
+                    // Display success message or redirect as needed
+                },
+                error: function(error) {
+                    console.error("Error submitting form:", error);
+                    // Handle errors if necessary (e.g., display error message)
+                }
+            });
+        }
+        });
+        
+       
+        
+    </script>        
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base2.html" %}
+{% block title %}Raw Materials{% endblock %}
+
+{% block content %}
+<div class="content-body">
+    <section id="raw-materials-list">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Raw Materials</h2>
+                        <a href="{% url 'wholesale:raw-materials-add' %}" class="btn btn-primary">Add Raw Material</a>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Raw Material Name</th>
+                                        <th>Category</th>
+                                        <th>Weight/Pack</th>
+                                        <th>Packaging</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for raw_material in raw_materials %}
+                                    <tr>
+                                        <td>{{ raw_material.raw_material_name }}</td>
+                                        <td>{{ raw_material.category }}</td>
+                                        <td>{{ raw_material.weight_pack }}</td>
+                                        <td>{{ raw_material.packaging }}</td>
+                                        <td>
+                                            <a href="{% url 'wholesale:raw-materials-edit' raw_material.pk %}" class="btn btn-xs btn-warning">Edit</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

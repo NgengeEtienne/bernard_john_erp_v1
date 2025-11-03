@@ -1,0 +1,110 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% if object.pk %}
+        Edit Product
+    {% else %}
+        Add Product
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="{% if object.pk %}edit-product{% else %}add-product{% endif %}">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if object.pk %}
+                                Edit Product
+                            {% else %}
+                                Add Product
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'wholesale:product-list' %}" class="btn btn-primary">Back to Products</a>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <!-- Product Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="product_name">Product Name</label>
+                                            {% render_field form.product_name class="form-control" placeholder="Enter Product Name" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Category -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="sub_category_name">Category</label>
+                                            {% render_field form.sub_category_name class="form-control" placeholder="Select Category" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Cost Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="cost_price">Cost Price</label>
+                                            {% render_field form.cost_price class="form-control" placeholder="Enter Cost Price" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Selling Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="selling_price">Selling Price</label>
+                                            {% render_field form.selling_price class="form-control" placeholder="Enter Selling Price" %}
+                                        </div>
+                                    </div>
+
+                                   
+
+                                <div class="form-actions">
+                                    <a href="{% url 'wholesale:product-list' %}">
+                                        <button type="button" class="btn btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> 
+                                        {% if object.pk %}
+                                            Update
+                                        {% else %}
+                                            Save
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

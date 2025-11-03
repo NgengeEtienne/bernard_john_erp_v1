@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
+    <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
+    <meta name="author" content="BJ">
+    <title>{% block title %} BJ Complex {% endblock title %}   </title>
+    <link rel="apple-touch-icon" href="{% static '' %}app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '' %}app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
+    <script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+    <script src="{% static '' %}app-assets/custom/jquery.validate.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/selectize@0.12.6/dist/css/selectize.bootstrap3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+    <link rel="stylesheet" href="{% static '' %}app-assets/custom/toastr.min.css">
+    <script src="{% static '' %}app-assets/custom/selectize.min.js"></script>
+    
+
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
+    <!-- END: Vendor CSS-->
+
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/pages/app-todo.css">
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="{% static '' %}app-assets/bootstrap.min.css"> -->
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/style.css"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/core/menu/menu-types/vertical-menu-modern.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/pages/app-contacts.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern vertical-collapsed-menu content-detached-left-sidebar app-contacts  menu-collapsed fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="content-detached-left-sidebar">
+
+  <!-- Top NavBar-->
+      {% include "partials2/top_nav_bar.html" %}
+  <!-- Top NavBar Ends -->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+
+          <!-- BEGIN: Main Menu Nav Side Bar-->
+              {% include "partials2/side_bar.html" %}
+            <!-- END: Main Menu Nav Side Bar-->
+
+            {% block content %}
+
+                        <div class="content-body">
+
+
+                        </div>
+
+            {% endblock content %}
+
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <!--<footer class="footer footer-static footer-light navbar-border navbar-shadow">
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2019 <a class="text-bold-800 grey darken-2" href="#" target="_blank">BJ Complex</a></span><span class="float-md-right d-none d-lg-block">Hand-crafted & Made with<i class="ft-heart pink"></i><span id="scroll-top"></span></span></p>
+    </footer>-->
+    <!-- END: Footer--><script src="{% static '' %}app-assets/custom/selectize.min.js"></script>
+    <script src="{% static '' %}app-assets/custom/toastr.min.js"></script>
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{% static '' %}app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{% static '' %}app-assets/vendors/js/tables/jquery.dataTables.min.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/extensions/jquery.raty.js"></script>
+    <script src="{% static '' %}app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{% static '' %}app-assets/js/core/app-menu.js"></script>
+    <script src="{% static '' %}app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{% static '' %}app-assets/js/scripts/pages/app-contacts.js"></script>
+    <!-- END: Page JS-->
+    {% block custom_js %}{% endblock %}
+    
+</body>
+<!-- END: Body-->
+
+</html>

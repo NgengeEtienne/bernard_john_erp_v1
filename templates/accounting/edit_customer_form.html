@@ -1,0 +1,234 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Edit Customer Account{% endblock title %}
+
+{% block content %}
+
+<div class="content-body">
+    <!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">Customer Form</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p></p>
+                            </div>
+ 
+                            <form class="form" method="post" enctype="multipart/form-data" novalidate>
+                                {% csrf_token %}
+                                
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %} 
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="id_account_photo">Customer Image</label>
+                                            <div style="visibility:hidde" class="linka">{{ form.account_photo }}</div> <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="account_photo">
+                                                <label class="custom-file-label" for="account_photo">Choose file</label>
+                                            </div>
+                                            {% if form.account_photo.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.account_photo.errors %}
+                                                <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <img id="image-preview" src="{{ customer.account_photo }}" alt="Image preview" class="card-img-top mb-1 patient-img img-fluid rounded-circle imgg">
+                                    </div>
+                                </div>
+                                
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Customer Name</label>
+                                          {% render_field form.customer_name class="form-control" placeholder="Customers Name" %}
+                                          {% if form.customer_name.errors %}
+                                          <div class="alert alert-danger">
+                                              {% for error in form.customer_name.errors %}
+                                                  <div>{{ error }}</div>
+                                              {% endfor %}
+                                          </div>
+                                          {% endif %}
+                                        </div>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="projectinput1">Customer Type</label>
+                                        {% render_field form.customer_type class="form-control" placeholder="" %}
+                                        {% if form.customer_type.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.customer_type.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="company_name">Company Name</label>
+                                        {% render_field form.company_name class="form-control" placeholder="" %}
+                                        {% if form.company_name.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.company_name.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        {% render_field form.address class="form-control" placeholder="Address" rows="1" %}
+                                        {% if form.address.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.address.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        {% render_field form.city class="form-control" placeholder="" rows="0"%}
+                                        {% if form.city.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.city.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="region">Region</label>
+                                        {% render_field form.region class="form-control" placeholder="0" %}
+                                        {% if form.region.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.region.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="phone">Phone</label>
+                                        {% render_field form.phone class="form-control" placeholder="example +237675275201" %}
+                                        {% if form.phone.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.phone.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        {% render_field form.email class="form-control" placeholder="charles@gmail.com" %}
+                                        {% if form.email.errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.email.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <a href="{% url 'bakery:customer' %}">
+                                    <button type="button" class="btn btn-warning mr-1">
+                                        <i class="ft-x"></i> Cancel
+                                    </button>
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="la la-check-square-o"></i> Save
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- // Basic form layout section end -->
+</div>
+{% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+    document.getElementById('id_account_photo').addEventListener('change', function(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById('image-preview').src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+const link = document.querySelector('.linka a'); // Get the anchor element within the div with class 'linka'
+const img = document.querySelector('.imgg'); // Get the image element with class 'img'
+
+if (link && img) {
+  const href = link.href; // Get the href attribute of the anchor
+  img.src = href; // Set the src attribute of the image to the copied href
+}
+
+    
+</script>
+{% endblock content %}

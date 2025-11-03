@@ -1,0 +1,300 @@
+{% extends '../../base2.html' %}
+{% block title %} Inventory Report{% endblock title %}
+
+{% block content %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <div class="content-overlay"></div>
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search contacts...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header">
+                                    <h4 class="card-title">Inventory Report</h4>
+                                    <div class="heading-elements mt-0">
+                                      <a href="{% url 'bakery:create_Inventory' %}">
+                                          <button  class="btn btn-primary btn-md" id="filter-button" data-toggle="modal" data-target="">
+                                              <i class="d-md-none d-block ft-plus white"></i>
+                                              <span class="d-md-block d-none"><i class="la la-clipboard"></i>Add Inventory</span>
+                                          </button>
+                                      </a>
+
+                                        <!-- Edit Contact -->
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <section id="payments-details">
+                              <div class="row">
+                                  <div class="col-12">
+                                      <div class="card">
+                                          <div class="card-header">
+                                              <h4 class="card-title float-left"></h4>
+
+                                              <form id="filter-form">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                                                      <label for="start-date">Start Date</label>
+                                                      <input type="date" class="form-control" id="start-date" name="start_date">
+                                                    </div>
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                                                      <label for="end-date">End Date</label>
+                                                      <input type="date" class="form-control" id="end-date" name="end_date">
+                                                    </div>
+
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="product">
+                                                        <label for="product">Product</label>
+                                                        <select class="form-control" id="product" name="product">
+                                                            {% for material in raw_materials %}
+                                                                <option value="{{ material.id }}">{{ material.raw_material_name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+
+                                                      </div>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                            </section>
+
+                            <div class="card-content">
+                                <div class="card-body">
+                                     <!-- Task List table -->
+                                     <ul class="nav nav-tabs nav-justified" id="myTab2" role="tablist" >
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="production-tab" data-toggle="tab" href="#production" role="tab" aria-controls="production" aria-selected="true">
+                                                <i class="fas fa-chart-pie fa-fw me-2"></i>Inventory Report Quantity
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="raw-material-usage-tab" data-toggle="tab" href="#raw-material-usage" role="tab" aria-controls="raw-material-usage" aria-selected="false">
+                                                <i class="fas fa-boxes fa-fw me-2"></i>Inventory Report Value
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content" id="myTab2Content">
+                                        <div class="tab-pane fade show active" id="production" role="tabpanel" aria-labelledby="production-tab" style="padding: 10px 0px;">
+                                    <!-- Task List table -->
+                                    
+                                    <div class="table-responsive">
+                                        <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                            <thead>
+                                              <tr>
+                                                <th>Raw material</th>
+                                                <th>Opening Inv</th>
+                                                <th>Purchase</th>
+                                                <th>Prod RM usage</th>
+                                                <th>Closing Inv</th>
+                                                <th>Exp Closing</th>
+                                                <th>Exp Diff</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody id="quality-tbody">
+                                               
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Raw material</th>
+                                                    <th>Opening Inv</th>
+                                                    <th>Purchase</th>
+                                                    <th>Prod RM usage</th>
+                                                    <th>Closing Inv</th>
+                                                    <th>Exp Closing</th>
+                                                    <th>Exp Diff</th>
+                                                  </tr>
+                                              </tfoot>
+                                          </table>
+                                    </div>
+                                    </div>
+                                    <div class="tab-pane show fade" id="raw-material-usage" role="tabpanel" aria-labelledby="raw-material-usage-tab" style="padding: 0px 0px;">
+                                    <!-- Task List table -->
+                                                                        
+                                    <div class="table-responsive">
+                                        <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                            <thead>
+                                            <tr>
+                                                <th>Raw material</th>
+                                                <th>Opening Inv</th>
+                                                <th>Purchase</th>
+                                                <th>Prod RM usage</th>
+                                                <th>Closing Inv</th>
+                                                <th>Exp Closing</th>
+                                                <th>Exp Diff</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="value-tbody">
+                                            
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Raw material</th>
+                                                    <th>Opening Inv</th>
+                                                    <th>Purchase</th>
+                                                    <th>Prod RM usage</th>
+                                                    <th>Closing Inv</th>
+                                                    <th>Exp Closing</th>
+                                                    <th>Exp Diff</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+{% load static %}
+ <link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<!-- Include Selectize.js CSS -->
+
+
+<script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function() {
+      $j('#product').selectize({
+        create: false,                   // Disable creating new items
+        sortField: 'text',
+        labelField: 'name',
+    
+        allowEmptyOption: true,          // Allows empty first option to act as placeholder
+        onInitialize: function() {
+          // Add form-control class to the generated input field
+          this.$control.addClass('form-control');
+        }
+      });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        function fetchAndPopulateData(startDate = null, endDate = null,selectedRawMaterialId=null) {
+            console.log("Fetching data with:", { startDate, endDate,selectedRawMaterialId });
+            $.ajax({
+                url: '/bakery/get-inventory-report/', // Replace with the actual URL
+                type: 'GET',
+                data: {
+                    start_date: startDate,
+                    end_date: endDate,
+                    selectedRawMaterialId:selectedRawMaterialId
+                },
+                success: function (response) {
+                    console.log(response.data);
+                    const tableBody = $('#quality-tbody');
+                    const tableVBody = $('#value-tbody');
+                    tableBody.empty(); // Clear the existing table rows
+                    tableVBody.empty(); // Clear the existing table rows
+
+                    if (response.data1.length === 0) {
+                        tableBody.append('<tr><td colspan="7" class="text-center text-muted">No data available</td></tr>');
+                        tableVBody.append('<tr><td colspan="7" class="text-center text-muted">No data available</td></tr>');
+                        return;
+                    }
+
+                    response.data1.forEach((item) => {
+                        tableBody.append(`
+                            <tr data-raw-material-id="${item.raw_material_id}" style="white-space: pre-wrap;">
+                                <td style="white-space: pre-wrap;">${item.raw_material}</td>
+                                <td>${item.opening_inventory.toLocaleString()}</td>
+                                <td>${item.purchase.toLocaleString()}</td>
+                                <td>${item.production_usage.toLocaleString()}</td>
+                                <td>${item.closing_inventory.toLocaleString()}</td>
+                                <td>${item.expected_closing.toLocaleString()}</td>
+                                <td style="color: ${item.expected_difference < 0 ? 'red' : 'green'};">${Math.abs(item.expected_difference).toLocaleString()}</td>
+                            </tr>
+                        `);
+                    });
+
+                    response.data2.forEach((item) => {
+                        tableVBody.append(`
+                            <tr data-raw-material-id="${item.raw_material_id}" style="white-space: pre-wrap;">
+                                <td style="white-space: pre-wrap;">${item.raw_material}</td>
+                                <td>${item.opening_inventory.toLocaleString()}</td>
+                                <td>${item.purchase.toLocaleString()}</td>
+                                <td>${item.production_usage.toLocaleString()}</td>
+                                <td>${item.closing_inventory.toLocaleString()}</td>
+                                <td>${item.expected_closing.toLocaleString()}</td>
+                                <td style="color: ${item.expected_difference < 0 ? 'red' : 'green'};">${Math.abs(item.expected_difference).toLocaleString()}</td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                    alert('Failed to fetch data. Please try again.');
+                }
+            });
+        }
+
+        // Fetch all data on page load
+        fetchAndPopulateData();
+ 
+        $('#filter-form').on('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const startDate = $('#start-date').val();
+            const endDate = $('#end-date').val();
+            const selectedRawMaterialId = $('#product').val();
+            fetchAndPopulateData(startDate, endDate, selectedRawMaterialId);
+        });
+        // Filter rows based on the selected raw material dynamically
+        $('.selectize-input .item').on('change', function () {
+                    const selectedRawMaterialId = $(this).attr('data-value');
+                    console.log("Selected raw material ID:", selectedRawMaterialId);
+                    if (selectedRawMaterialId) {
+                        // Show only rows that match the selected raw material ID
+                        $('#tbody tr').hide();
+                        $(`#tbody tr[data-raw-material-id="${selectedRawMaterialId}"]`).show();
+                    } else {
+                        // If no raw material is selected, show all rows
+                        $('#tbody tr').show();
+                    }
+                });
+
+    });
+</script>
+
+{% endblock content %}

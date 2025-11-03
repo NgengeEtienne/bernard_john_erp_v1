@@ -1,0 +1,78 @@
+{% extends 'base2.html' %}
+{% block title %} bar general ledger edits {% endblock title %}
+
+{% block content %}
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search bar general ledger edits...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Accounts Debits</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <a href="{% url 'accounting:accounts_category' %}" class="btn btn-info mb-3">Account Category</a>
+                                <a href="{% url 'accounting:accounts_sub_category' %}" class="btn btn-info mb-3">Account Sub Category</a>
+                                <a href="{% url 'accounting:accounts_debit_add' %}" class="btn btn-primary mb-3">Add New Debit</a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Accounts Sub Category</th>
+                                            <th>Accounts Debit</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for debit in debits %}
+                                            <tr>
+                                                <td>{{ debit.accounts_sub_category }}</td>
+                                                <td>{{ debit.account_debit }}</td>
+                                                <td>
+                                                    <a href="{% url 'accounting:accounts_debit_edit' debit.pk %}" class="btn btn-warning">Edit</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

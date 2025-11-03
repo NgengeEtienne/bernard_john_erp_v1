@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<!-- Mirrored from material-admin-pro.startbootstrap.com/app-auth-login-styled-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Aug 2024 14:01:11 GMT -->
+<head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>BJ Complex - Login</title>
+        <!-- Load Favicon-->
+        <link href="assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <!-- Load Material Icons from Google Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet" />
+        <!-- Roboto and Roboto Mono fonts from Google Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/ionicons.min.css">
+        <!-- Load main stylesheet-->
+        <link href="{% static '' %}app-assets/css/styles.css" rel="stylesheet" />
+        <style>
+            .bg-pattern-doubs {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("/static/app-assets/img/patterns/doubs.svg");
+  background-position: center;
+}
+        </style>
+    </head>
+    <body class="bg-pattern-doubs">
+        <!-- Layout wrapper-->
+        <div id="layoutAuthentication">
+            <!-- Layout content-->
+            <div id="layoutAuthentication_content">
+                <!-- Main page content-->
+                <main>
+                    <!-- Main content container-->
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-8">
+                                <div class="card card-raised shadow-10 mt-5 mt-xl-10 mb-4">
+                                    <div class="card-body p-5">
+                                        <!-- Auth header with logo image-->
+                                        <div class="text-center">
+                                            <img class="mb-3" src="{% static '' %}app-assets/img/icons/background.svg" alt="..." style="height: 48px" />
+                                            <h1 class="display-5 mb-0">Login</h1>
+                                            <div class="subheading-1 mb-5">to continue to app</div>
+                                        </div>
+                                        <!-- Login submission form-->
+                                        <form action="{% url 'login' %}" method="POST">
+                                            {% csrf_token %}
+                                            {% if form.errors %}
+                                            <div class="alert alert-warning">
+                                                {{ form.non_field_errors }}
+
+                                                {{ form.username.errors }}
+                                                {{ form.password.errors }}
+                                            </div>
+                                            {% endif %}
+                                            <div >
+                                                <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                                                <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" class="form-control" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}">
+                                            </div>
+                                            
+                                            <div >
+                                                <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                                                <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}" class="form-control" placeholder="Password" value="{{ form.password.value|default_if_none:'' }}">
+                                                <span class="position-absolute top-50 end-0 translate-middle-y pe-3" style="cursor: pointer;">
+                                                    <i class="fas fa-eye" id="togglePassword" onclick="togglePasswordVisibility('password')"></i>
+                                                </span>                                            </div>
+                                            
+                                            <div  >
+                                                <input type="checkbox" id="rememberMe" name="rememberMe" class="form-check-input">
+                                                <label for="rememberMe" class="form-check-label">Remember password</label>
+                                            </div>
+                                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <a class="small fw-500 text-decoration-none" href="{% url 'forgot_password' %}">Forgot Password?</a>
+                                                <button type="submit" class="btn btn-primary" >Login</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Auth card message-->
+                                <div class="text-center mb-5"><a class="small fw-500 text-decoration-none link-white" href="{% url 'register' %}">Need an account? Sign up!</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <!-- Layout footer-->
+            <div id="layoutAuthentication_footer">
+                <!-- Auth footer-->
+                <footer class="p-4">
+                    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between small">
+                        <div class="me-sm-3 mb-2 mb-sm-0"><div class="fw-500 text-white">Copyright © Your Website 2023</div></div>
+                        <div class="ms-sm-3">
+                            <a class="fw-500 text-decoration-none link-white" href="#!">Privacy</a>
+                            <a class="fw-500 text-decoration-none link-white mx-4" href="#!">Terms</a>
+                            <a class="fw-500 text-decoration-none link-white" href="#!">Help</a>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <!-- Load Bootstrap JS bundle-->
+        <link rel="stylesheet" type="text/css" href="{% static '' %}app-assets/css/bootstrap.css">
+        <!-- Load global scripts-->
+        
+        <script src="{% static '' %}app-assets/js/scripts.js"></script>
+
+        {% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+            function togglePasswordVisibility(fieldId) {
+                var passwordField = document.getElementById(fieldId);
+                var icon = document.getElementById('toggle' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1));
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'8b7363bb58ea8edc',t:'MTcyNDMzNTIzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='cdn-cgi/challenge-platform/h/b/scripts/jsd/6790c32b9fc9/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8b7363bb58ea8edc","version":"2024.8.0","serverTiming":{"name":{"cfL4":true}},"token":"6e2c2575ac8f44ed824cef7899ba8463","b":1}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from material-admin-pro.startbootstrap.com/app-auth-login-styled-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Aug 2024 14:01:11 GMT -->
+</html>

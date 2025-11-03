@@ -1,0 +1,150 @@
+{% extends 'base2.html' %}
+{% block title %} {{department}} general ledger edits {% endblock title %}
+
+{% block content %}
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search bar general ledger edits...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header">
+                                    <h4 class="card-title">All {{department}} General Ledger</h4>
+                                        <div class="heading-elements mt-0">
+                                          <a href="{% url 'accounting:accounts_category' %}">
+                                              <button  class="btn btn-primary btn-md"><i class="d-md-none d-block ft-plus white"></i>
+                                                  <span class="d-md-block d-none"><i class="la la-user"></i>Accounts Category</span>
+                                              </button>
+                                          </a>
+                                          <a href="{% url 'accounting:department_general_ledger_add' department=department %}">
+                                            <button  class="btn btn-primary btn-md"><i class="d-md-none d-block ft-plus white"></i>
+                                                <span class="d-md-block d-none"><i class="la la-clipboard"></i>Add Invoice</span>
+                                            </button>
+                                          </a>
+                                          
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Management Level</th>
+                                                                <th>Employee Name</th>
+                                                                <th>Institution</th>
+                                                                <th>Description</th>
+                                                                <th>Amount</th>
+                                                                <th>Accounts Debit</th>
+                                                                <th>Accounts Credit</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                          {% for customer in general_ledger %}
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a href="" class="media-heading name">{{ customer.management_level }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a class="media-heading name">{{ customer.employee_name }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a class="media-heading name">{{ customer.custom_user }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a class="media-heading name">{{ customer.institution }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a class="media-heading name">{{ customer.description }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a class="media-heading name">{{ customer.amount }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a class="media-heading name">{{ customer.accounts_debit }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media-body media-middle">
+                                                                        <a class="media-heading name">{{ customer.accounts_credit }}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <!-- <a href="" class="secondary mr-1"><i class="la la-eye"></i></a> -->
+                                                                    <a href=" {% url 'accounting:department_general_ledger_edit' department=department pk=customer.pk  %}" class="primary edit mr-1"><i class="la la-pencil"></i></a>
+                                                                    <a class="danger delete mr-1"><i class="la la-trash-o"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                          {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="pagination">
+                                                    <span class="step-links">
+                                                        {% if general_ledger.has_previous %}
+                                                            <a href="?page=1">&laquo; first</a>
+                                                            <a href="?page={{ general_ledger.previous_page_number }}">previous</a>
+                                                        {% endif %}
+                                                        
+                                                        <span class="current">
+                                                            Page {{ general_ledger.number }} of {{ general_ledger.paginator.num_pages }}.
+                                                        </span>
+        
+                                                        {% if general_ledger.has_next %}
+                                                            <a href="?page={{ general_ledger.next_page_number }}">next</a>
+                                                            <a href="?page={{ general_ledger.paginator.num_pages }}">last &raquo;</a>
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

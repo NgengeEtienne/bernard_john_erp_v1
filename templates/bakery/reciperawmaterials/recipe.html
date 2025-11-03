@@ -1,0 +1,188 @@
+{% extends "base2.html" %}
+
+{% block content %}
+<div class="mx-4"><a href="{% url 'bakery:reciperawmaterial-list' %}" class="btn btn-primary my-2">Back to Recipe Raw Materials</a></div>
+<div class=" w-100 mb-0">
+    
+    <div class="container card mb-4">
+        <div class="card-header bg-info text-white px-4 ">
+            <div class="fw-500">OUTPUT RECIPE</div>
+        </div>
+        <div class="card-body">
+            <form id="category-form">
+                <div class="form-row align-items-center">
+                    <!-- Product Select Dropdown -->
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="categorySelect">Choose a Product:</label>
+                            {{ form.recipe }} <!-- Django form field -->
+                            <small class="form-text text-muted mx-0">Start typing to select Product</small>
+                        </div>
+                        
+                    </div>
+        
+                    <!-- Output Number Input -->
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="output">Enter the Output Number:</label>
+                            <input type="number" name="output" id="output" class="form-control output" placeholder="Enter the output number" value="10">
+                            <small class="form-text text-muted">Press Enter to launch the calculation.</small>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+    <div class="row" id="display">
+        <div class="col-lg">
+            <div class="card">
+                <div class="card-header bg-info text-white px-4">
+                    <div class="fw-500">Available raw Materials</div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive w-100">
+                        <table class="table table-hover w-100 mb-0 table-striped table-sm">
+                            <thead class="text-xs font-monospace" id="example" class="table table-striped table-bordered" style="width:100%">
+                                <tr>
+                                    <td class="px-4 py-2 border-bottom-0 text-muted">Raw Material</td>
+                                    
+                                    <td class="px-4 py-2 border-bottom-0 text-muted">Raw Require/Unit Output</td>
+                                                                       
+                                    <td class="px-4 py-2 border-bottom-0 text-muted">Total RM Required (grams)</td>
+                                    <td class="px-4 py-2 border-bottom-0 text-muted">Raw Material/Kg</td>
+                                    <td class="px-4 py-2 border-bottom-0 text-muted">Unit Cost RM</td>
+                                    <!-- <td class="px-4 py-2 border-bottom-0 text-muted">Price/Gram</td> -->
+                                    <td class="px-4 py-2 border-bottom-0 text-muted">Percentage Cost</td>
+                                    <td class="px-4 py-2 border-bottom-0 text-muted">Total Cost</td>
+                                </tr>
+                            </thead>
+                            
+                            <tbody id="raw-materials-body">
+                                <!-- Features will be populated here via AJAX -->
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        Select a Product!
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot id="tfoot" class="card-header text-xs font-monospace" id="example" class="table table-striped table-bordered" style="width:100%">
+                                
+                            <tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+          
+          
+          
+          
+    </div>
+</div>
+{% load static %}
+ <link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<!-- Include Selectize.js CSS -->
+
+
+<script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function() {
+      $j('#recipe').selectize({
+        create: false,                   // Disable creating new items
+        sortField: 'text',
+        labelField: 'name',
+    
+        allowEmptyOption: true,          // Allows empty first option to act as placeholder
+        onInitialize: function() {
+          // Add form-control class to the generated input field
+          this.$control.addClass('form-control');
+        }
+      });
+    });
+</script>
+
+
+
+  
+<script>
+
+$(document).ready(function () {
+    $('#display').hide();
+
+    function renderTable(materials, totals) {
+        const tbody = $('#raw-materials-body').empty();
+        materials.forEach(material => {
+            tbody.append(`
+                <tr>
+                    <td class="px-4 border-top">${material.name}</td>
+                    <td class="px-4 border-top">${material.quantity_grams.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td class="px-4 border-top">${material.required_grams.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} g</td>
+                    <td class="px-4 border-top">${material.kg.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${material.entryMeasure}</td>
+                    <td class="px-4 border-top">${material.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <!--<td class="px-4 border-top">${material.price_per_gram.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>-->
+                    <td class="px-4 border-top">${material.percentage_cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</td>
+                    <th class="px-4 border-top">${material.total_cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} frs</th>
+                </tr>
+            `);
+        });
+
+        $('#tfoot').html(`
+            <tr>
+                <th class="px-4 py-2">Total</th>
+                <th class="px-4 py-2">${totals.total_quantity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</th>
+                <th class="px-4 py-2">${totals.total_required_grams.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} g</th>
+                <th class="px-4 py-2">-</th>
+                <th class="px-4 py-2">${totals.total_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</th>
+                <!--<th class="px-4 py-2">${totals.total_price_per_gram.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</th>-->
+                <th class="px-4 py-2">${totals.total_percentage_cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</th>
+                <th class="px-4 py-2">${totals.total_cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} FRS</th>
+            </tr>
+        `);
+    }
+
+    $('[name="recipe"]').change(function () {
+        const recipe_id = $(this).val();
+        const output = $('#output').val();
+
+        if (recipe_id) {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'bakery:get_recipe' %}",
+                data: { recipe_id, output },
+                success: function (data) {
+                    $('#display').show();
+                    renderTable(data.materials, data.totals);
+                },
+                error: function () {
+                    alert('Failed to load features.');
+                }
+            });
+        } else {
+            $('#display').hide();
+            $('#raw-materials-body').empty();
+            $('#tfoot').empty();
+        }
+    });
+
+    $('#output,#recipe').on('keypress', function (e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            $('#recipe').trigger('change');  // Reuse change event
+        }
+    });
+
+    
+});
+
+
+</script>
+    
+    
+{% endblock %}

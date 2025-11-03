@@ -1,0 +1,131 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} {% if form.instance.pk %} Edit Recipe Raw Material {% else %} Add Recipe Raw Material {% endif %} {% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="{% if form.instance.pk %}edit-recipe-raw-material{% else %}add-recipe-raw-material{% endif %}">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if form.instance.pk %}
+                                Edit Recipe Raw Material
+                            {% else %}
+                                Add Recipe Raw Material
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'boulangerie:reciperawmaterial-list' %}" class="btn btn-primary">Back to Recipe Raw Materials</a>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form" method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <!-- Recipe -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="recipe">Recipe</label>
+                                            {% render_field form.recipe class="form-control" placeholder="Select Recipe" %}
+                                            {% if form.recipe.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.recipe.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Raw Material -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="raw_material">Raw Material</label>
+                                            {% render_field form.raw_material class="form-control" placeholder="Select Raw Material" %}
+                                            {% if form.raw_material.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.raw_material.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Quantity per Recipe -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="quantity_per_recipe">Quantity per Recipe</label>
+                                            {% render_field form.quantity_per_recipe class="form-control" placeholder="Enter Quantity per Recipe" %}
+                                            {% if form.quantity_per_recipe.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.quantity_per_recipe.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Measure -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="measure">Measure</label>
+                                            {% render_field form.measure class="form-control" placeholder="Select Measure" %}
+                                            {% if form.measure.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.measure.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <a href="{% url 'boulangerie:reciperawmaterial-list' %}">
+                                        <button type="button" class="btn btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> 
+                                        {% if form.instance.pk %}
+                                            Update
+                                        {% else %}
+                                            Save
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

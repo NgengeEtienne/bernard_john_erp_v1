@@ -1,0 +1,176 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} {% if form.instance.pk %} Edit Product {% else %} Add Product {% endif %} {% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="{% if form.instance.pk %}edit-product{% else %}add-product{% endif %}">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if form.instance.pk %}
+                                Edit Product
+                            {% else %}
+                                Add Product
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'bakery:product-list' %}" class="btn btn-primary">Back to Products</a>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form" method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <!-- Product Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="product_name">Product Name</label>
+                                            {% render_field form.product_name class="form-control" placeholder="Enter Product Name" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Category -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="category">Category</label>
+                                            {% render_field form.category class="form-control" placeholder="Select Category" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Supply Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="price">Supply Price</label>
+                                            {% render_field form.price class="form-control" placeholder="Enter Supply Price" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Selling Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="selling_price">Selling Price</label>
+                                            {% render_field form.selling_price class="form-control" placeholder="Enter Selling Price" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Entry Weight/Boule -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="entry_weight_per_boule">Entry Weight/Boule</label>
+                                            {% render_field form.entry_weight_per_boule class="form-control" placeholder="Enter Entry Weight/Boule" value="0.00" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Weight/Boule/kg -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="weight_per_boule_kg">Weight/Boule/kg</label>
+                                            {% render_field form.weight_per_boule_kg class="form-control" placeholder="Enter Weight/Boule/kg" value="0.00" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Weight/Boule/grams -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="weight_per_boule_gram">Weight/Boule/grams</label>
+                                            {% render_field form.weight_per_boule_gram class="form-control" placeholder="Enter Weight/Boule/grams" value="0.00" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Output/Boule -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="output_per_boule">Output/Boule</label>
+                                            {% render_field form.output_per_boule class="form-control" placeholder="Enter Output/Boule" value="0.00" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Weight/Unit Output/grams -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="unit_output_weight">Weight/Unit Output/grams</label>
+                                            {% render_field form.unit_output_weight class="form-control" placeholder="Enter Weight/Unit Output/grams" value="0.00" %}
+                                        </div>
+                                    </div>
+                                    <!-- Recipes -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="unit_output_weight">Recipe</label>
+                                            {% render_field form.recipe class="form-control" placeholder="Enter Weight/Unit Output/grams" value="0.00" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <a href="{% url 'bakery:product-list' %}">
+                                        <button type="button" class="btn btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> 
+                                        {% if form.instance.pk %}
+                                            Update
+                                        {% else %}
+                                            Save
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}
+{% block custom_js %}
+{% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+    $(document).ready(function() {  
+        var $select = $('select[name$="recipe"]').selectize({  
+            create: false,
+            sortField: {
+                field: 'text',
+                direction: 'asc'
+            }
+        });
+        $('.selectize-input').addClass('form-control');
+        var selectizeControl = $select[0].selectize;  
+        var options = selectizeControl.options;  
+        for (var key in options) {  // Loop through each option and store it in the productNames array #}
+            if (options.hasOwnProperty(key)) {
+                productNames.push({ value: key, text: options[key].text });
+            }
+        }
+    });
+</script>
+{% endblock custom_js %}

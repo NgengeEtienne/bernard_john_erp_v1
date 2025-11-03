@@ -1,0 +1,634 @@
+{% extends "base2.html" %}
+<!-- Content Row -->
+{% block content %}
+<div class="row">   
+   <style>
+       .table {
+           border: 0;
+       }
+   </style>
+   
+   
+  
+   <div id="alert-container"></div>
+   <div class="col-xl-12 col-lg-7">
+       <div class="card shadow mb-4">
+           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+               <span class="m-0 font-weight-bold text-primary">Production Entry</span>
+           </div>
+           <div class="card-body">
+               <form method="post" ">
+                   {% csrf_token %}
+                   <div class="row d-flex">
+                       <div class="col-md-3">
+                           <div class="form-group">
+                               <label class="form-label" for="production_date">Production Date</label>
+                               {{ form.created_at }}
+                           </div>
+                       </div>
+
+                       <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label" for="production_batch">Sub Department</label>
+                            {{ form.sub_department }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label" for="production_date">Session</label>
+                            {{ form.session }}
+                        </div>
+                    </div>
+                   </div>
+
+                   <div class="row d-flex">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label" for="production_date">Batch Number</label>
+                            {{ form.mixture_number}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label" for="production_batch">Supervisor</label>
+                            {{ form.supervisor }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                     <div class="form-group">
+                         <label class="form-label" for="production_batch">Stock Supervisor</label>
+                         {{ form.stock_supervisor}}
+                     </div>
+                 </div>
+                </div>
+
+                               <div class="row align-items-center">
+                                <div class="col">
+                                    <h5 class="form-label primary">Bakery Raw Material Usage</h5>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="form-label text-success font-weight-bold">Total:<span id="rawtot">0.00</span> XAF</span>
+                                </div>
+                            </div>
+
+
+                   <div class="table form-table material" style="border-top:0px">
+                       <table class="table table-striped">
+                           {% for form in formset %}
+                           {{ form.non_field_errors }}
+
+                           {{ form.product.errors }}
+                           {{ form.quantity.errors }}
+                           {% endfor %}
+                           {% for form in formset %}
+                           <tr class="raw">
+                               <td class="p-1 col-md-3">
+                                   <label class="form-label" for="production_detail_product">Raw Material</label>
+                                   {{ form.raw_material }}
+                               </td>
+                               <td class="p-1 col-md-3">
+                                <label class="form-label" for="production_detail_product">Qty</label>
+                                {{ form.qty }}
+                               </td>
+                                <td class="p-1 col-md-3">
+                                    <label class="form-label" for="production_detail_product">Unit Cost Price</label>
+                                    {{ form.unit_cost_price }}
+                                </td>
+
+                                <td class="p-1 col-md-2">
+                                    <span class="form-label" for="ptotal">Total</span>
+                                    <input type="text" name="ptotal" class="form-control ptotal" value=0.00 id="ptotal" readonly>
+                                </td>
+                                <td  class="p-1 col-md-2 ">
+                                    <label class="form-label py-1" for="invoice_price">
+                                        <a class="muted  mr-1"><i class="la la-trash-o"></i></a>
+                                    </label>
+                                </td>
+                                
+                           </tr>
+                           {% endfor %}
+                       </table>
+                   </div>
+                   <div class="mb-3 d-flex justify-content-center">
+                       <input class="btn btn-outline-warning add-form-row" style="margin: 0 1em 0 1em; width: 40%" type="button" value="Add more product" id="add_more_row_production">
+                       <input class="btn btn-outline-success" name="create-raw" style="margin: 0 1em 0 1em; width: 40%" type="submit" value="Submit">
+                   </div>
+               </form>
+
+
+               <hr class="hr black" />
+
+               <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="form-label primary">Bakery Production Output</h5>
+                    </div>
+                    <div class="col-auto">
+                        <span class="form-label text-success font-weight-bold">Total:<span id="outtot">0.00</span> XAF</span>
+                    </div>
+                </div>
+               <div class="table form-table output" style="border-top:0px">
+                <table class="table table-striped">
+                    {% for form in formset2 %}
+                    {{ form.non_field_errors }}
+
+                    {{ form.product.errors }}
+                    {{ form.quantity.errors }}
+                    {% endfor %}
+                    {% for form in formset2 %}
+                    <tr class="out">
+                        <td class="p-1 col-md-3">
+                            <label class="form-label" for="production_detail_output_category">Output Category</label>
+                            {{ form.output_category }}
+                        </td>
+                        <td class="p-1 col-md-3">
+                            <label class="form-label" for="production_detail_product">Product</label>
+                            {{ form.product }}
+                        </td>
+                        <td class="p-1 col-md-2">
+                            <label class="form-label" for="production_detail_qty">Quantity</label>
+                            {{ form.qty }}
+                        </td>
+                        <td class="p-1 col-md-2">
+                            <label class="form-label" for="production_detail_product_price">Price</label>
+                            {{ form.product_price }}
+                        </td>
+
+                        <td class="p-1 col-md-2">
+                            <span class="form-label" for="ptotal">Total</span>
+                            <input type="text" name="ptotal" class="form-control ptotal" value=0.00 id="ptotal" readonly>
+                        </td>
+                        <td class="p-1 col-md-2">
+                            <label class="form-label py-1" for="delete-row">
+                                <a class="muted mr-1"><i class="la la-trash-o"></i></a>
+                            </label>
+                        </td>
+                    </tr>
+                    
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="mb-3 d-flex justify-content-center">
+                <input class="btn btn-outline-warning add-form-row" style="margin: 0 1em 0 1em; width: 40%" type="button" value="Add more product" id="add_more">
+                <input class="btn btn-outline-success" name="create-out" style="margin: 0 1em 0 1em; width: 40%" type="submit" value="Submit">
+            </div>
+           </div>
+       </div>
+   </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+
+
+
+{% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+    
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-full-width",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+    const productNames = [];  {# Array to store product options for selectize #}
+    
+    $(document).ready(function() {  {# Ensure the script runs after the DOM is fully loaded #}
+        var $select = $('select[name$="-raw_material"], select[name$="product"]').selectize({  {# Initialize selectize for all product fields #}
+            create: false,
+            sortField: {
+                field: 'text',
+                direction: 'asc'
+            }
+        });
+        $('.selectize-input').addClass('form-control');
+        var selectizeControl = $select[0].selectize;  {# Get the selectize control for further operations #}
+        
+        var options = selectizeControl.options;  {# Fetch options from the selectize instance #}
+        for (var key in options) {  {# Loop through each option and store it in the productNames array #}
+            if (options.hasOwnProperty(key)) {
+                productNames.push({ value: key, text: options[key].text });
+            }
+        }
+        
+        function initializeSelectize(row) {  {# Function to initialize selectize for new rows #}
+            row.find('select[name$="-raw_material"],select[name$="product"]').each(function() {
+                if ($(this)[0].selectize) {
+                    $(this)[0].selectize.destroy();  //{# Destroy existing selectize instance before reinitializing #}
+                }
+                $(this).selectize({
+                    create: false,
+                    options: productNames,  {# Use stored options for new selectize instances #}
+                    sortField: {
+                        field: 'text',
+                        direction: 'asc'
+                    }
+                });
+            });
+            $('.selectize-input').addClass('form-control');  //{# Ensure selectize input has form-control class for styling #}
+        }
+        
+        $('#add_more_row_production').click(function() {  {# Event listener for the Add More button #}
+            $.ajax({
+                url: "{% url 'bar:add_more_row_production' %}",  {# URL to fetch a new row via AJAX #}
+                method: 'GET',
+                success: function(response) {  //{# On successful response, append the new row and initialize selectize #}
+                    var $newRow = $(response.row_html);
+                    $('table:first').append($newRow);
+                    initializeSelectize($newRow);
+                }
+            });
+        });
+        
+
+        $('#add_more').click(function() {  {# Event listener for the Add More button #}
+        $.ajax({
+            url: "{% url 'bar:add_more_row_output' %}",  {# URL to fetch a new row via AJAX #}
+            method: 'GET',
+            success: function(response) {  {# On successful response, append the new row and initialize selectize #}
+                var $newRow = $(response.row_html);
+                $('table:eq(1)').append($newRow);
+                initializeSelectize($newRow);
+            }
+        });
+    });
+        
+        $(document).on('click', '.delete-row', function() {  {# Event listener to delete a row when the delete button is clicked #}
+            $(this).closest('tr').remove();  {# Remove the closest table row #}
+        });
+
+       
+
+        
+            // Event listener for quantity and price input changes
+            $(document).on('input', 'input[name$="-qty"], input[name$="-price"], input[name$="_price"], input[name$="-discount_price"]', function() {
+                var $row = $(this).closest('tr');
+            
+                // Check if $row is valid; fallback to the first row if not
+                if (!$row.length) {
+                    $row = $('table:first tr:first');
+                }
+            
+                calcTotal($row);
+            });
+            
+        
+
+            function calcTotal($row) {
+                //console.log($row);
+                var quantity = parseFloat($row.find('input[name$="-qty"]').val());
+                var price = parseFloat($row.find('input[name$="_price"]').val());
+                var discountPrice = parseFloat(0);
+                
+                var ptotalInput = $row.find('input[id^="ptotal"]'); // Find the input with id starting with "ptotal"
+                
+                // Calculate the amount
+                var amount = isNaN(quantity) || isNaN(price) ? 0 : (quantity * price) - (quantity * discountPrice);
+                
+                // Update the value of the ptotal input
+                ptotalInput.val(amount.toFixed(2)); // Use .val() to set the value, and .toFixed(2) to format it to two decimal places
+                
+             
+                    
+                
+                    var totalSumraw = 0;
+
+                    $('tr.raw').each(function(index, element) {
+                        // Find the span with id "ptotal" in the current row
+                        var spanValue = $(element).find('#ptotal').val();
+                    
+                        // Remove non-numeric characters except for decimal points
+                        var numericValue = parseFloat(spanValue.replace(/[^0-9.-]/g, ''));
+                    
+                        // Add the numeric value to the total sum if it's a valid number
+                        if (!isNaN(numericValue)) {
+                            totalSumraw += numericValue;
+                        }
+                    });
+                    
+                $('#rawtot').text(totalSumraw.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+
+                var totalSumout = 0;
+
+                $('tr.out').each(function(index, element) {
+                    // Find the span with id "ptotal" in the current row
+                    var spanValue = $(element).find('#ptotal').val();
+                
+                    // Remove non-numeric characters except for decimal points
+                    var numericValue = parseFloat(spanValue.replace(/[^0-9.-]/g, ''));
+                
+                    // Add the numeric value to the total sum if it's a valid number
+                    if (!isNaN(numericValue)) {
+                        totalSumout += numericValue;
+                    }
+                });
+                
+            $('#outtot').text(totalSumout.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                
+            }
+            
+            function fetchProductPriceByName(productId, priceField) {
+                console.log("in product")
+                
+                $.ajax({
+                    url: "{% url 'bar:get_product_price' %}",
+                    data: {
+                        'product_id': productId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data && data.price) {
+                            priceField.val(data.price);
+                            //console.log("Product price set:", data.price);
+                        } else {
+                           // console.error("Error: Invalid data received:", data);
+                        }
+                    }
+                });
+            }
+            // Event listener for product change
+            
+            $(document).on('change', 'select[name$="-product"]', function() {
+                var selectId = $(this).attr('id'); // Get the ID of the changed select element
+                var productId = $(this).val();
+                var $this = $(this);
+                var row = $(this).closest('.tr');
+                var $tr = $this.closest('tr'); // Find the closest `tr` to the changed select
+
+                // Find the price input within the same `tr`
+                var priceField = $tr.find('input[name$="-product_price"]');
+
+              
+                //console.log("selectId:", selectId);
+               // console.log("productId:", productId);
+               // console.log("priceField:", priceField);
+              
+                fetchProductPriceByName(productId, priceField);
+                calcTotal()
+              });
+              
+            
+            
+
+                        
+            function fetchRawPriceByName(productId, priceField) {
+                console.log("in Raw")
+               
+                $.ajax({
+                    url: "{% url 'bar:get_raw_price' %}",
+                    data: {
+                        'rm_id': productId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data && data.price) {
+                            priceField.val(data.price);
+                            console.log("Product price set:", data.price);
+                        } else {
+                           // console.error("Error: Invalid data received:", data);
+                        }
+                    }
+                });
+            }
+            // Event listener for product change
+            
+            $(document).on('change', 'select[name$="-raw_material"]', function() {
+                var selectId = $(this).attr('id'); // Get the ID of the changed select element
+                var productId = $(this).val();
+                var $this = $(this);
+                var row = $(this).closest('.tr');
+                var $tr = $this.closest('tr'); // Find the closest `tr` to the changed select
+
+                // Find the price input within the same `tr`
+                var priceField = $tr.find('input[name$="-unit_cost_price"]');
+
+
+              
+                fetchRawPriceByName(productId, priceField);
+                calcTotal()
+              });
+        
+            // Initialize Selectize for the initial visible rows
+            initializeSelectize($('.tr:first'));
+            $('.selectize-input').addClass('form-control');
+        });
+
+
+        $('.btn[name="create-raw"]').click(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+        
+                // Initialize an array to hold error messages
+                var errors = [];
+
+                // Check required fields in the main form
+                var requiredFields = ['sub_department', 'created_at', 'session', 'mixture_number', 'supervisor', 'stock_supervisor']; // Add all required fields here
+
+                requiredFields.forEach(function(field) {
+                    var value = $(`input[name="${field}"], select[name="${field}"]`).val();
+                    if (!value) {
+                        errors.push(`The ${field} field is required.`);
+                    }
+                });
+
+            // Serialize the main form and formset data
+            var formData = $('form').serializeArray();
+            
+            // Initialize row count
+            var rowCount = 0;
+        
+            // Iterate through each row in the formset (each 'tr' element)
+            $('tr.raw').each(function(index, element) {
+                // Increment the row count
+                rowCount++;
+        
+                // Serialize the inputs in each row
+                $(element).find('input, select').each(function() {
+                    var inputName = $(this).attr('name');
+                    var inputValue = $(this).val();
+        
+                    if (inputName) {
+                        // Check and rename the input name based on certain conditions
+                        if (inputName.includes("raw_material")) {
+                            inputName = `product_${rowCount}`;
+                        } else if (inputName.includes("-qty")) {
+                            inputName = `quantity_${rowCount}`;
+                        } else if (inputName.includes("-unit_cost_price")) {
+                            inputName = `price_${rowCount}`;
+                        } else if (inputName.includes("ptotal")) {
+                            inputName = `ptotal_${rowCount}`;
+                        }
+            
+                        // Push the renamed input name and its value into formData
+                        formData.push({
+                            name: inputName,
+                            value: inputValue
+                        });
+                    }
+                });
+
+            });
+        
+        
+            // Add row_count to the formData
+            formData.push({
+                name: "row_count",
+                value: rowCount
+            });
+        
+        if (errors.length > 0) {
+            // Display error messages to the user
+           
+            alert(errors.join('\n'));
+        } else {
+            console.log(formData);
+            $.ajax({
+                url: "{% url 'bar:create-production' %}", // Update with your URL to handle form submission
+                type: "POST",
+                data: $.param(formData),
+                success: function(response) {
+                    // Handle successful submission
+                    console.log("Form submitted successfully:", response);
+                    //displayMessage("success", "Invoice created successfully!");
+                    //console.log(formData);
+                    showAlert(response.production_id);                    //window.location.href = "{% url 'bar:invoice-payments' %}";
+                    // Display success message or redirect as needed
+                },
+                error: function(error) {
+                    console.error("Error submitting form:", error);
+                    // Handle errors if necessary (e.g., display error message)
+                }
+            });
+        }
+        });
+
+
+
+        $('.btn[name="create-out"]').click(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+        
+                // Initialize an array to hold error messages
+                var errors = [];
+
+                // Check required fields in the main form
+                var requiredFields = ['sub_department', 'created_at', 'session', 'mixture_number', 'supervisor', 'stock_supervisor']; // Add all required fields here
+
+                requiredFields.forEach(function(field) {
+                    var value = $(`input[name="${field}"], select[name="${field}"]`).val();
+                    if (!value) {
+                        errors.push(`The ${field} field is required.`);
+                    }
+                });
+
+            // Serialize the main form and formset data
+            var formData = $('form').serializeArray();
+            
+            // Initialize row count
+            var rowCount = 0;
+        
+            // Iterate through each row in the formset (each 'tr' element)
+            $('tr.out').each(function(index, element) {
+                // Increment the row count
+                rowCount++;
+        
+                // Serialize the inputs in each row
+                $(element).find('input, select').each(function() {
+                    var inputName = $(this).attr('name');
+                    var inputValue = $(this).val();
+        
+                    if (inputName) {
+                        // Check and rename the input name based on certain conditions
+                        if (inputName.includes("-output_category")) {
+                            inputName = `output_category_${rowCount}`;
+                        } else if (inputName.includes("-product") && !inputName.includes("-product_price")) {
+                            inputName = `product_${rowCount}`;
+                        } else if (inputName.includes("-qty")) {
+                            inputName = `quantity_${rowCount}`;
+                        } else if (inputName.includes("-product_price") && !inputName.includes("-product")) {
+                            inputName = `price_${rowCount}`;
+                        } else if (inputName.includes("ptotal")) {
+                            inputName = `ptotal_${rowCount}`;
+                        }
+            
+                        // Push the renamed input name and its value into formData
+                        formData.push({
+                            name: inputName,
+                            value: inputValue
+                        });
+                    }
+                });
+
+            });
+        
+        
+            // Add row_count to the formData
+            formData.push({
+                name: "row_count",
+                value: rowCount
+            });
+        
+        if (errors.length > 0) {
+            // Display error messages to the user
+           
+            alert(errors.join('\n'));
+        } else {
+            console.log(formData);
+            $.ajax({
+                url: "{% url 'bar:create-out' %}", // Update with your URL to handle form submission
+                type: "POST",
+                data: $.param(formData),
+                success: function(response) {
+                    // Handle successful submission
+                    console.log("Form submitted successfully:", response);
+                    //displayMessage("success", "Invoice created successfully!");
+                    //console.log(formData);
+                    showAlert(response.production_id);
+                    //window.location.href = "{% url 'bar:invoice-payments' %}";
+                    // Display success message or redirect as needed
+                },
+                error: function(error) {
+                    console.error("Error submitting form:", error);
+                    // Handle errors if necessary (e.g., display error message)
+                }
+            });
+        }
+        });
+
+        function showAlert(productionId, timeout = 5000) {
+            // Create the alert HTML
+            const alertHtml = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Bakery Raw Material Usage has been saved successfully with production id: ${productionId}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            `;
+
+            // Insert the alert HTML into the container
+            document.getElementById('alert-container').innerHTML = alertHtml;
+
+            // Trigger the alert fade-in effect
+            $('.alert').alert(); // Ensure Bootstrap JavaScript is loaded
+
+            // Auto-dismiss the alert after the specified timeout
+            setTimeout(() => {
+                $('.alert').alert('close');
+            }, timeout);
+        }
+</script>
+{% endblock %}  {# End the custom JavaScript block #}

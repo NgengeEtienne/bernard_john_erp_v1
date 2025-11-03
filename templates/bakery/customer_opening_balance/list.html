@@ -1,0 +1,55 @@
+{% extends "base2.html" %}
+
+{% block title %}
+    Customer Opening Balances
+{% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="customer-opening-balances">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Customer Opening Balances</h2>
+                        <a href="{% url 'bakery:customer-opening-balance-add' %}" class="btn btn-success float-right">
+                            <i class="fas fa-plus"></i> Add New Opening Balance
+                        </a>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Invoice</th>
+                                            <th>Customer</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for balance in customer_opening_balances %}
+                                        <tr>
+                                            <td>{{ balance.date }}</td>
+                                            <td>{{ balance.invoice }}</td>
+                                            <td>{{ balance.customer }}</td>
+                                            <td>
+                                                <a href="{% url 'bakery:customer-opening-balance-edit' balance.pk %}" class="btn btn-info">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

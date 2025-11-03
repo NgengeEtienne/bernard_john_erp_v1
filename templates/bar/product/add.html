@@ -1,0 +1,147 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} {% if form.instance.pk %} Edit Product {% else %} Add Product {% endif %} {% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="{% if form.instance.pk %}edit-product{% else %}add-product{% endif %}">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if form.instance.pk %}
+                                Edit Product
+                            {% else %}
+                                Add Product
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'bar:product-list' %}" class="btn btn-primary">Back to Products</a>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form" method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <!-- Product Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="product_name">Product Name</label>
+                                            {% render_field form.product_name class="form-control" placeholder="Enter Product Name" %}
+                                            {% if form.product_name.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.product_name.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Category -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="category">Category</label>
+                                            {% render_field form.category class="form-control" placeholder="Select Category" %}
+                                            {% if form.category.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.category.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Supply Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="price">Supply Price</label>
+                                            {% render_field form.price class="form-control" placeholder="Enter Supply Price" %}
+                                            {% if form.price.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.price.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Selling Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="selling_price">Selling Price</label>
+                                            {% render_field form.selling_price class="form-control" placeholder="Enter Selling Price" %}
+                                            {% if form.selling_price.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.selling_price.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Unit Measure -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="unit_measure">Unit Measure (Litres/grams)</label>
+                                            {% render_field form.unit_measure class="form-control" placeholder="Enter Unit Measure" %}
+                                            {% if form.unit_measure.errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.unit_measure.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-actions">
+                                    <a href="{% url 'bar:product-list' %}">
+                                        <button type="button" class="btn btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> 
+                                        {% if form.instance.pk %}
+                                            Update
+                                        {% else %}
+                                            Save
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

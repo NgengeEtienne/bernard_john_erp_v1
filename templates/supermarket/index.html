@@ -1,0 +1,111 @@
+
+        {% extends '../base2.html' %}
+{% block title %} Bar Details {% endblock title %}
+
+
+{% block content %}   
+{% comment %} <style> .tt{ background-color: white}</style>   {% endcomment %}
+<!-- BEGIN: Content -->
+{% load static %}
+<section class="row all-contacts tt p-4">
+    <div class="col-12">
+        
+       
+        
+       
+        <div class="container">
+            <div class="row">
+
+
+<!-- Supermarket Card -->
+<div class="col-md-6 col-sm-12 mb-4">
+    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+        <div class="card-header">
+            <h5 class="m-0">Supermarket</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <tbody>
+                    <!-- Invoices -->
+                    <tr>
+                        <td><a href="{% url 'supermarket:invoice' %}">Invoices</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'supermarket:create-invoice' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'supermarket:invoice' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Purchases -->
+                    <tr>
+                        <td><a href="{% url 'supermarket:purchases' %}">Purchases</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'supermarket:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'supermarket:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Returns -->
+                    <tr>
+                        <td><a href="{% url 'supermarket:add-returns' %}">Returns</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'supermarket:add-returns' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'supermarket:add-returns' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Customers -->
+                    <tr>
+                        <td><a href="{% url 'supermarket:customer-list' %}">Customers</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'supermarket:customer-add' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'supermarket:customer-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Categories -->
+                    <tr>
+                        <td><a href="{% url 'supermarket:category-list' %}">Categories</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'supermarket:category-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'supermarket:category-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Suppliers -->
+                    <tr>
+                        <td><a href="{% url 'supermarket:supplier' %}">Suppliers</a></td>
+                        <td>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'supermarket:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                <a href="{% url 'supermarket:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+        
+
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- END: Content -->
+
+    {% endblock content %}

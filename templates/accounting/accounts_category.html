@@ -1,0 +1,27 @@
+{% extends "base2.html" %}
+{% block content %}
+    <h1>Accounts Categories</h1>
+    <a href="{% url 'accounting:accounts_debit' %}" class="btn btn-info mb-3">Account Debit</a>
+    <a href="{% url 'accounting:accounts_credit' %}" class="btn btn-info mb-3">Account Credit</a>
+    <a href="{% url 'accounting:accounts_category_add' %}" class="btn btn-primary mb-3">Add New Category</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in accounts_category %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ category.account_category }}</td>
+                <td>
+                    <a href="{% url 'accounting:accounts_category_edit' category.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

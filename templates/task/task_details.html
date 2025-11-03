@@ -1,0 +1,204 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '' %}bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}lib/pickadate.css">
+ {% endblock %}
+
+{% block title %} Task Details{% endblock title %}
+
+{% block content %}
+
+<div class="content-body">
+  <div class="content-overlay"></div>
+  <div class="content-wrapper">
+      <div class="content-header row">
+          <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+              <h3 class="content-header-title mb-0 d-inline-block">Task Details</h3>
+              <div class="row breadcrumbs-top d-inline-block">
+                  <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="{% url 'task:task-home' %}">Home</a>
+                          </li>
+                          <li class="breadcrumb-item"><a href="#">Task</a>
+                          </li>
+                          <li class="breadcrumb-item active">Task Details
+                          </li>
+                      </ol>
+                  </div>
+              </div>
+          </div>
+          <div class="content-header-right col-md-6 col-12">
+              <div class="btn-group float-md-right">
+                  <button class="btn btn-info dropdown-toggle mb-1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                  <div class="dropdown-menu arrow">
+                    <a class="dropdown-item" href="{% url 'task:edit-task' task.id %}"><i class="la la-edit mr-1"></i> Edit</a>
+
+                      <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fa fa-cog mr-1"></i> Settings</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="content-body">
+          <section class="card">
+              <div id="invoice-template" class="card-body p-4">
+                  <!-- Invoice Company Details -->
+                  <div id="invoice-company-details" class="row">
+
+
+                  </div>
+                  <!-- Invoice Company Details -->
+
+                  <!-- Invoice Customer Details -->
+                  <div id="invoice-customer-details" class="row pt-2">
+                      <div class="col-12 text-center text-sm-left">
+                          <p class="text-muted"> <h3>Task Title : {{ task.title }}</h3> </p>
+                      </div>
+                      <div class="col-sm-6 col-12 text-center text-sm-left">
+                          <ul class="px-0 list-unstyled">
+                              <li class="text-bold-800 text-uppercase"> Name of Author | {{ task.author }}  </li>
+                              <li class="text-bold-800">  State | {{ task.state }}  </li>
+                              <li> Date Created | {{ task.created }} </li>
+                            <!--  <li>Albuquerque,</li>
+                              <li>New Mexico-87102.</li> -->
+                          </ul>
+                      </div>
+                      <div class="col-sm-6 col-12 text-center text-sm-right">
+                          <p class="text-uppercase"><span class="text-muted">Designated Employee :</span> {{ task.employee }}</p>
+                          <p><span class="text-muted">Count Down Duration :</span> {{ task.expiry_date|timeuntil  }}</p>
+                          <p><span class="text-muted">Due Date :</span> {{ task.expiry_date  }}</p>
+                      </div>
+                  </div>
+                  <!-- Invoice Customer Details -->
+
+                  <!-- Invoice Items Details -->
+                  <div id="invoice-items-details" class="pt-2">
+                      <div class="row">
+                          <div class="table-responsive col-12">
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+
+                                          <th>Description</th>
+
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+
+                                          <td>
+                                              <p class="text-muted">{{ task.description}}
+                                              </p>
+                                          </td>
+
+                                      </tr>
+
+
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-7 col-12 text-center text-sm-left">
+                              <p class="lead">Requirments:</p>
+                              <div class="row">
+                                  <div class="col-sm-8">
+                                      <div class="table-responsive">
+                                          <table class="table table-borderless table-sm">
+                                              <tbody>
+                                                  <tr>
+
+                                                    {% if task.instruction1 %}
+                                                      <td>1:</td>
+                                                      <td class="text-right">{{task.instruction1}}</td>
+                                                    {% endif %}
+
+                                                  </tr>
+                                                  <tr>
+
+                                                      {% if task.instruction2 %}
+                                                        <td>2:</td>
+                                                        <td class="text-right">{{task.instruction2}}</td>
+                                                      {% endif %}
+                                                  </tr>
+                                                  <tr>
+
+                                                      {% if task.instruction3 %}
+                                                        <td>3:</td>
+                                                        <td class="text-right">{{task.instruction3}}</td>
+                                                      {% endif %}
+                                                  </tr>
+                                                  <tr>
+
+                                                      {% if task.instruction4 %}
+                                                        <td>4:</td>
+                                                        <td class="text-right">{{task.instruction4}}</td>
+                                                      {% endif %}
+                                                  </tr>
+                                                  <tr>
+
+                                                      {% if task.instruction5 %}
+                                                        <td>5:</td>
+                                                        <td class="text-right">{{task.instruction5}}</td>
+                                                      {% endif %}
+                                                  </tr>
+
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-5 col-12">
+                              <div class="text-center">
+                                  <p class="mb-0 mt-1">Task Author</p>
+                                  <img src="{% static '' %}app-assets/images/pages/signature-scan.png" alt="signature" class="height-100" />
+                                  <h6 class="text-uppercase">{{task.author}}</h6>
+                                  <p class="text-muted">{{task.employee.role}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <br><br>
+
+                  <!-- Invoice Footer -->
+                  <div id="invoice-footer">
+                      <div class="row">
+                          <div class="col-sm-7 col-12 text-center text-sm-left">
+                              <h6>Terms & Condition</h6>
+                              <p>Please Endeavor to Complete your task before the Due Date.</p>
+                              <p>For any information contact the task creator</p>
+                          </div>
+                          <div class="col-sm-5 col-12 text-center">
+                              <button type="button" class="btn btn-info btn-print btn-lg my-1"><i class="la la-paper-plane-o mr-50"></i>
+                                  Print
+                                  Invoice</button>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Invoice Footer -->
+
+              </div>
+          </section>
+
+      </div>
+  </div>
+
+</div>
+
+{% endblock content %}
+  <script src="{% static '' %}lib/picker.js"></script>
+  <script src="{% static '' %}lib/picker.date.js"></script>
+  <script src="{% static '' %}lib/legacy.js"></script>
+
+  <script type="text/javascript">
+      $("#id_due_date").pickadate({format: 'yyyy-mm-dd' }).val();
+</script>
+
+{% block script %}
+
+ {% endblock %}

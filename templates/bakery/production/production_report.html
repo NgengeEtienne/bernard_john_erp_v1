@@ -1,0 +1,226 @@
+{% extends '../../base2.html' %}
+{% block title %} Production Report {% endblock title %}
+
+{% block content %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-detached content-center">
+            <div class="content-body">
+                <div class="content-overlay"></div>
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bug-list-search">
+                                    <div class="bug-list-search-content">
+                                        <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                                        <form action="#">
+                                            <div class="position-relative">
+                                                <input type="search" id="search-contacts" class="form-control" placeholder="Search contacts...">
+                                                <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row all-contacts">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-head">
+                                <div class="card-header">
+                                    <h4 class="card-title">Production Report</h4>
+                                    <div class="heading-elements mt-0">
+                                      <a href="{% url 'bakery:create-production' %}">
+                                          <button  class="btn btn-primary btn-md" id="filter-button" data-toggle="modal" data-target="">
+                                              <i class="d-md-none d-block ft-plus white"></i>
+                                              <span class="d-md-block d-none"><i class="la la-clipboard"></i>Add Production</span>
+                                          </button>
+                                      </a>
+
+                                        <!-- Edit Contact -->
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <section id="payments-details">
+                              <div class="row">
+                                  <div class="col-12">
+                                      <div class="card">
+                                          <div class="card-header">
+                                              <h4 class="card-title float-left"></h4>
+
+                                              <form id="filter-form">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                                                      <label for="start-date">Start Date</label>
+                                                      <input type="date" class="form-control" id="start-date" name="start_date">
+                                                    </div>
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                                                      <label for="end-date">End Date</label>
+                                                      <input type="date" class="form-control" id="end-date" name="end_date">
+                                                    </div>
+
+                                                    <div class="form-group col-md-3 col-lg-3" data-provide="product">
+                                                        <label for="product">Product</label>
+                                                        <select class="form-control" name="product" id="product">
+                                                            <option value="">-- Select a Product --</option>
+                                                            {% for product in products %}
+                                                                <option value="{{product.product.id}}">{{product.product}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                      </div>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                            </section>
+
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <!-- Task List table -->
+                                    
+                                    <div class="table-responsive">
+                                        <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th style="white-space: nowrap;">Product Name</th>
+                                                    <th style="white-space: nowrap;">Opening Stock</th>
+                                                    <th style="white-space: nowrap;">Prod Output</th>
+                                                    <th style="white-space: nowrap;">Damages</th>
+                                                    <th style="white-space: nowrap;">Consumption</th>
+                                                    <th style="white-space: nowrap;">Sales</th>
+                                                    <th style="white-space: nowrap;">Returns Inwards</th>
+                                                    <th style="white-space: nowrap;">Closing Stock</th>
+                                                    <th style="white-space: nowrap;">Exp Closing</th>
+                                                    <th style="white-space: nowrap;">Diff</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody">
+                                                <!-- Table rows will be dynamically populated via AJAX -->
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th style="white-space: nowrap;">Product Name</th>
+                                                    <th style="white-space: nowrap;">Opening Stock</th>
+                                                    <th style="white-space: nowrap;">Prod Output</th>
+                                                    <th style="white-space: nowrap;">Damages</th>
+                                                    <th style="white-space: nowrap;">Consumption</th>
+                                                    <th style="white-space: nowrap;">Sales</th>
+                                                    <th style="white-space: nowrap;">Returns Inwards</th>
+                                                    <th style="white-space: nowrap;">Closing Stock</th>
+                                                    <th style="white-space: nowrap;">Exp Closing</th>
+                                                    <th style="white-space: nowrap;">Diff</th>
+                                                    
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+{% load static %}
+ <link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<!-- Include Selectize.js CSS -->
+<script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function() {
+      $j('#product').selectize({
+        create: false,                   // Disable creating new items
+        sortField: 'text',
+        labelField: 'name',
+    
+        allowEmptyOption: true,          // Allows empty first option to act as placeholder
+        onInitialize: function() {
+          // Add form-control class to the generated input field
+          this.$control.addClass('form-control');
+        }
+      });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        function fetchProductionReport(startDate, endDate, product) {
+            $.ajax({
+                url: '/bakery/get-production-report/', // Replace with the correct URL
+                type: 'GET',
+                data: {
+                    start_date: startDate,
+                    end_date: endDate,
+                    product: product
+                },
+                success: function (response) {
+                    const tableBody = $('#tbody');
+                    tableBody.empty(); // Clear the existing rows
+
+                    if (response.data.length === 0) {
+                        tableBody.append('<tr><td colspan="10" class="text-center text-muted">No data available</td></tr>');
+                        return;
+                    }
+
+                    response.data.forEach((item) => {
+                        tableBody.append(`
+                            <tr>
+                                <td>${item.product_name}</td>
+                                <td>${item.opening_stock.toLocaleString()}</td>
+                                <td>${item.production_output.toLocaleString()}</td>
+                                <td>${item.damages.toLocaleString()}</td>
+                                <td>${item.consumption.toLocaleString()}</td>
+                                <td>${item.sales.toLocaleString()}</td>
+                                <td>${item.returns.toLocaleString()}</td>
+                                <td>${item.closing_stock.toLocaleString()}</td>
+                                <td>${item.expected_closing.toLocaleString()}</td>
+                                <td style="color: ${item.difference < 0 ? 'red' : 'green'};">${Math.abs(item.difference).toLocaleString()}</td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching production report:', error);
+                    alert('Failed to fetch production report. Please try again.');
+                }
+            });
+        }
+
+        // Event listener for filters
+        $('#filter-form').on('submit', function (e) {
+            e.preventDefault();
+            const startDate = $('#start-date').val();
+            const endDate = $('#end-date').val();
+            const product = $('#product').val();
+            fetchProductionReport(startDate, endDate, product);
+        });
+
+        // Initial load without filters
+        fetchProductionReport();
+    });
+</script>
+
+{% endblock content %}

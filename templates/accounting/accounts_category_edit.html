@@ -1,0 +1,13 @@
+{% extends "base2.html" %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Accounts Category</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">
+            {% if form.instance.pk %}Save Changes{% else %}Add Category{% endif %}
+        </button>
+    </form>
+    <a href="{% url 'accounting:accounts_category' %}" class="btn btn-secondary mt-3">Back to List</a>
+{% endblock %}

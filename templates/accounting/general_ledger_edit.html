@@ -1,0 +1,214 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Edit Customer{% endblock title %}
+
+{% block content %}
+
+<div class="content-body">
+    <!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">Edit Customer</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form" method="post" novalidate>
+                                {% csrf_token %}
+                                <div class="table form-table" style="border-top:0px">
+                                    <table class="table table-striped" id="product_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Management Level</th>
+                                                <th>Employee Name</th>
+                                                <th>Institution</th>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Debit</th>
+                                                <th>Credit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="form_rows">
+                                            {% for row in rows %}
+                                            <tr>
+                                                <td class="p-1">{{ form.created|attr:"class:form-control" }}</td>
+                                                <td class="p"><div style="width:100px">{{ form.management_level|attr:"class:form-control" }}</div></td>
+                                                <td class="p-1">{{ form.employee_name|attr:"class:form-control" }}</td>
+                                                <td class="p-2">{{ form.institution|attr:"class:form-control" }}</td>
+                                                <td class="p-1">{{ form.description|attr:"class:form-control" }}</td>
+                                                <td class="p-1">{{ form.amount|attr:"class:form-control" }}</td>
+                                                <td class="p-1">{{ form.accounts_debit|attr:"class:form-control" }}</td>
+                                                <td class="p-1">{{ form.accounts_credit|attr:"class:form-control" }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="mb-3 d-flex justify-content-center">
+                                    <input class="btn btn-outline-warning" style="margin: 0 1em 0 1em; width: 40%" type="button" value="Add more row" id="add_mor" readonly>
+                                    <input class="btn btn-outline-success" name="create-invoice" style="margin: 0 1em 0 1em; width: 40%" type="submit" value="Submit">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- // Basic form layout section end -->
+</div>
+
+{% endblock content %}
+{% block custom_js %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+    <script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            const productNames = [];
+
+            // Initialize selectize for product name and fetch options
+            var $select = $('select[name$="accounts_debit"], select[name$="accounts_credit"]').selectize({
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+
+            var selectizeControl = $select[0].selectize;
+
+            // Fetch options and store in productNames array
+            var options = selectizeControl.options;
+            for (var key in options) {
+                if (options.hasOwnProperty(key)) {
+                    productNames.push({ value: key, text: options[key].text });
+                }
+            }
+
+            // Function to initialize selectize for new rows
+            function initializeSelectize(row) {
+                row.find('select[name$="accounts_debit"], select[name$="accounts_credit"]').each(function() {
+                    if ($(this)[0].selectize) {
+                        $(this)[0].selectize.destroy();
+                    }
+                    $(this).selectize({
+                        create: false,
+                        options: productNames,
+                        sortField: {
+                            field: 'text',
+                            direction: 'asc'
+                        }
+                    });
+                });
+                $('.selectize-input').addClass('form-control');
+            }
+
+            $('#add_more').click(function() {
+                $.ajax({
+                    url: `{% url 'accounting:add_more_row_general_ledger' department %}`,  // Update with your URL
+                    method: 'GET',
+                    success: function(response) {
+                        var $newRow = $(response.row_html);
+                        $('#form_rows').append($newRow);
+                        initializeSelectize($newRow);
+                    }
+                });
+            });
+
+            // Initialize Selectize for the initial visible rows
+            initializeSelectize($('#form_rows tr'));
+
+            // Function to collect form data from all rows
+            $('form').submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Initialize an array to hold error messages
+                var errors = [];
+
+                // Check required fields in the main form
+                var requiredFields = ['created', 'management_level', 'employee_name', 'institution', 'description', 'amount', 'accounts_debit', 'accounts_credit']; // Add all required fields here
+
+                requiredFields.forEach(function(field) {
+                    var value = $(`input[name="${field}"], select[name="${field}"]`).val();
+                    if (!value) {
+                        errors.push(`The ${field} field is required.`);
+                    }
+                });
+
+                // Serialize the main form and formset data
+                var formData = $(this).serializeArray();
+
+                // Initialize row count
+                var rowCount = 0;
+
+                // Iterate through each row in the formset (each 'tr' element)
+                $('#form_rows tr').each(function(index, element) {
+                    // Increment the row count
+                    rowCount++;
+
+                    // Serialize the inputs in each row
+                    $(element).find('input, select').each(function() {
+                        var inputName = $(this).attr('name');
+                        var inputValue = $(this).val();
+
+                        if (inputName) {
+                            // Check and rename the input name based on certain conditions
+                            if (inputName.includes("created") && !inputName.includes("initial-created")) {
+                                inputName = `created_${rowCount}`;
+                            } else if (inputName.includes("management_level")) {
+                                inputName = `management_level_${rowCount}`;
+                            } else if (inputName.includes("employee_name")) {
+                                inputName = `employee_name_${rowCount}`;
+                            } else if (inputName.includes("institution")) {
+                                inputName = `institution_${rowCount}`;
+                            } else if (inputName.includes("description")) {
+                                inputName = `description_${rowCount}`;
+                            } else if (inputName.includes("amount")) {
+                                inputName = `amount_${rowCount}`;
+                            } else if (inputName.includes("accounts_debit")) {
+                                inputName = `accounts_debit_${rowCount}`;
+                            } else if (inputName.includes("accounts_credit")) {
+                                inputName = `accounts_credit_${rowCount}`;
+                            }
+                            formData.push({ name: inputName, value: inputValue });
+                        }
+                    });
+                });
+
+                // Append row count to the form data
+                formData.push({ name: 'row_count', value: rowCount });
+
+                // Make an AJAX request to submit the form data
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    data: $.param(formData),
+                    success: function(response) {
+                        if (response.success) {
+                            window.location.href = "{% url 'accounting:department_general_ledger' department %}";
+                        } else {
+                            // Handle errors here
+                            console.log(response.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock custom_js %}

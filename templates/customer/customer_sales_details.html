@@ -1,0 +1,274 @@
+
+{% extends "base2.html" %}
+{% load static %}
+
+
+{% block title %} Employees | Home {% endblock title %}
+
+
+{% block content %}
+
+
+<div class="content-header row">
+    <div class="content-header-light col-12">
+        <div class="row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <h3 class="content-header-title">Employee Profile</h3>
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Customer</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#">{{customer.customer_name}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{customer.customer_name}}'s Account
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="content-header-right col-md-3 col-12">
+                <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+                  <div class="heading-elements">
+                      <ul class="list-inline mb-0">
+                          <li><a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right" href="{% url 'customer:customer-home' %}" target="">Customer | Home</a></li>
+                      </ul>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-overlay"></div>
+<div class="content-wrapper">
+    <div class="content-body">
+        <section id="patient-profile">
+            <div class="row match-height">
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 d-flex justify-content-around">
+                                    <div class="patient-img-name text-center">
+                                        <img src="" alt="" class="card-img-top mb-1 patient-img img-fluid rounded-circle">
+                                        <h4>{{customer.customer_name}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 d-flex justify-content-around">
+                                    <div class="patient-info">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <div class="patient-info-heading"><h6 class="text-dark">Account Number: </h6> </div> <h5>{{customer.customer_name}}</h5>
+                                            </li>
+                                            <li>
+                                                <div class="patient-info-heading"><h6 class="text-dark">Email: </h6> </div> <h5>{{customer.email}}</h5>
+                                            </li>
+                                            <li>
+                                                <div class="patient-info-heading"><h6 class="text-dark">Contact: </h6></div> <h5>{{customer.phone}}</h5>
+                                            </li>
+                                            <li>
+                                                <div class="patient-info-heading"><h6 class="text-dark">Address: </h6></div> <h5>{{customer.residential_address}}</h5>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4">
+                    <div class="card bg-gradient-y-warning">
+                        <div class="card-header">
+                            <h5 class="card-title text-white">Salary Information</h5>
+                            <hr>
+                        </div>
+                        <div class="card-content mx-1 mb-4">
+                            <ul class="list-unstyled text-white">
+                                <li>Base Salary :  <span> 100,000  </span></li>
+                                <li>House Allowance <span>  50,000  </span></li>
+                                <li>Health Allowance  <span>  25,000  </span></li>
+                                <li>Transport Allowance  <span>  25,000  </span></li>
+                                <li>Insurance Allowance  <span> 25,000  </span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Salary History</h2>
+                            <div class="table-responsive">
+                                <table class="table patient-wrapper">
+                                    <tbody>
+                                        <tr>
+                                            <td class=" border-top-0 align-middle">
+                                                <img src="app-assets/images/portrait/small/avatar-s-1.png" alt="" class="rounded-circle doctor-img">
+                                            </td>
+                                            <td class="align-middle border-top-0">Dr. Phil Gray</td>
+                                            <td class="align-middle border-top-0">Dentist</td>
+                                            <td class="align-middle border-top-0">
+                                                <i class="la la-calendar-check-o"></i> 15/10/18
+                                            </td>
+                                            <td class="align-middle border-top-0">
+                                                <i class="la la-map-marker"></i> 58th Street, Manhattan, NYC
+                                            </td>
+                                            <td class="align-middle border-top-0">
+                                                <i class="la la-circle text-danger"></i> Hospital Visit
+                                            </td>
+                                            <td class="align-middle border-top-0">
+                                                <div class="action">
+                                                    <a href="#"><i class="ft-edit text-success"></i></a>
+                                                    <a href="#"><i class="ft-trash-2 text-warning"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card pull-up">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7 text-left">
+                                                <h5 class="mb-0">Total Purchases</h5>
+                                                <h6 class="text-dark">5,000,000 cfa</h6>
+                                            </div>
+                                            <div class="col-5 ">
+                                                <div>
+                                                    <canvas id="patient-blood-pressure" class="height-75"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card pull-up">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7  text-left">
+                                              <h5 class="mb-0">Total Payments</h5>
+                                              <h6 class="text-dark">5,000,000 cfa</h6>
+                                            </div>
+                                            <div class="col-5 ">
+                                                <div>
+                                                    <canvas id="patient-heart-rate" class="height-75"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card pull-up">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7 text-left">
+                                              <h5 class="mb-0">Total Commission</h5>
+                                              <h6 class="text-dark">5,000,000 cfa</h6>
+                                            </div>
+                                            <div class="col-5">
+                                                <div>
+                                                    <canvas id="patient-glucose" class="height-75"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card pull-up">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7 text-left">
+                                              <h5 class="mb-0">Total Damages</h5>
+                                              <h6 class="text-dark">5,000,000 cfa</h6>
+                                            </div>
+                                            <div class="col-5">
+                                                <div>
+                                                    <canvas id="patient-cholestrol" class="height-75"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card pull-up">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7 text-left">
+                                              <h5 class="mb-0">Total Purchases</h5>
+                                              <h6 class="text-dark">5,000,000 cfa</h6>
+                                            </div>
+                                            <div class="col-5">
+                                                <div>
+                                                    <canvas id="patient-glucose" class="height-75"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card pull-up">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7 text-left">
+                                              <h5 class="mb-0">Total Purchases</h5>
+                                              <h6 class="text-dark">5,000,000 cfa</h6>
+                                            </div>
+                                            <div class="col-5">
+                                                <div>
+                                                    <canvas id="patient-cholestrol" class="height-75"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,140 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Add Customer{% endblock title %}
+
+
+{% block content %}
+
+<div class="content-body">
+    <!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">Customer Form</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p></p>
+                            </div>
+
+                            <form class="form" method="post" novalidate>
+                              {% csrf_token %}
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Customer Name</label>
+                                          {% render_field form.customer_name class="form-control" placeholder="Customers Name" required="required"%}
+                                      </div>
+                                  </div>
+ 
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="projectinput1">Customer Type</label>
+                                        {% render_field form.customer_type class="form-control" placeholder="" %}
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="projectinput1">Company Name</label>
+                                        {% render_field form.company_name class="form-control" placeholder="" %}
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-8">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Address</label>
+                                          {% render_field form.address class="form-control" placeholder="Address" rows="1" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">City</label>
+                                          {% render_field form.city class="form-control" placeholder="" rows="0"%}
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Region</label>
+                                          {% render_field form.region class="form-control" placeholder="0" %}
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Phone</label>
+                                          {% render_field form.phone class="form-control" placeholder=" example +237675275201" %}
+                                          {% if form.phone.errors %}
+                                                <div class="text-danger">
+                                                    {% for error in form.phone.errors %}
+                                                        <p>{{ error }}</p>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Email</label>
+                                          {% render_field form.email class="form-control" placeholder="charles@gmail.com" %}
+                                      </div>
+                                  </div>
+
+                                </div>
+
+
+
+                                  <div class="form-actions">
+                                    <a href="">
+                                      <button type="button" class="btn btn-warning mr-1">
+                                          <i class="ft-x"></i> Cancel
+                                      </button>
+                                    </a>
+                                      <button type="submit" class="btn btn-primary">
+                                          <i class="la la-check-square-o"></i> Save
+                                      </button>
+                                  </div>
+
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+    </section>
+    <!-- // Basic form layout section end -->
+</div>
+
+{% endblock content %}

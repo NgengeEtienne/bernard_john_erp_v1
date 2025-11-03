@@ -1,0 +1,122 @@
+{% extends "base2.html" %}
+{% load widget_tweaks %}
+
+{% block title %} {% if form.instance.pk %} Edit Raw Material {% else %} Add Raw Material {% endif %} {% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="{% if form.instance.pk %}edit-raw-material{% else %}add-raw-material{% endif %}">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if form.instance.pk %}
+                                Edit Raw Material
+                            {% else %}
+                                Add Raw Material
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'wholesale:raw-materials-list' %}" class="btn btn-primary">Back to Raw Materials</a>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="raw_material_name">Raw Material Name</label>
+                                            {% render_field form.raw_material_name class="form-control" placeholder="Enter Raw Material Name" %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="raw_material_category">Category</label>
+                                            {% render_field form.category class="form-control" %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="weight_pack">Weight/Pack</label>
+                                            {% render_field form.weight_pack class="form-control" placeholder="Enter Weight/Pack" %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="packaging">Packaging</label>
+                                            {% render_field form.packaging class="form-control" %}
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row"> -->
+                                        <!-- Entry Measure -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="entry_measure">Entry Measure</label>
+                                                {% render_field form.entry_measure class="form-control" placeholder="Select Entry Measure" %}
+                                                {% if form.entry_measure.errors %}
+                                                <div class="alert alert-danger">
+                                                    {% for error in form.entry_measure.errors %}
+                                                        <div>{{ error }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- Product Tag -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="tag">Product Tag</label>
+                                                {% render_field form.tag class="form-control" placeholder="Select Product Tag" %}
+                                                {% if form.tag.errors %}
+                                                <div class="alert alert-danger">
+                                                    {% for error in form.tag.errors %}
+                                                        <div>{{ error }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    <!-- </div> -->
+                                    
+                                </div>
+
+                                <div class="form-actions">
+                                    <a href="{% url 'wholesale:raw-materials-list' %}">
+                                        <button type="button" class="btn btn-warning">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> {% if form.instance.pk %} Update {% else %} Save {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

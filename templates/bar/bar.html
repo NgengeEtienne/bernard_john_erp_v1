@@ -1,0 +1,80 @@
+{% extends '../base2.html' %}
+{% block title %} Bar Details {% endblock title %}
+
+{% block content %}
+{% load static %}
+<section class="row all-contacts tt p-4">
+    <div class="col-12">
+        <div class="container">
+            <div class="row">
+
+                <!-- Categories -->
+                <div class="col-md-6 col-sm-12 mb-4">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <div class="card-header">
+                            <h5 class="m-0">Bar</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td><a href="{% url 'bar:category-list' %}">Categories</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bar:category-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bar:category-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="{% url 'bar:Inventories' %}">Inventories</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bar:create_Inventory' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bar:Inventories' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="{% url 'bar:supplier' %}">Suppliers</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bar:create-supplier' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bar:supplier' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- New row for Products -->
+                                    <tr>
+                                        <td><a href="{% url 'bar:product-list' %}">Products</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bar:product-create' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bar:product-list' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                
+                                        <td><a href="{% url 'bar:purchases' %}">Purchases</a></td>
+                                        <td>
+                                            <div class="btn-group float-right">
+                                                <a href="{% url 'bar:create-purchase' %}" class="btn btn-xs btn-success addlink">Add</a>
+                                                <a href="{% url 'bar:purchases' %}" class="btn btn-xs btn-info changelink">View</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock content %}

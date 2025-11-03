@@ -1,0 +1,30 @@
+<tr>
+                                
+    <td  class="p-1">
+        <label class="form-label" for="invoice_detail_product">Product name</label>
+        {{ form.raw_material_name }}
+    </td>
+    <td  class="p-1">
+        <label class="form-label" for="invoice_detail_qty">Quantity</label>
+        {{ form.status }}
+    </td>
+    <td  class="p-1">
+        <label class="form-label" for="invoice_detail_qty">Quantity</label>
+        {{ form.quantity }}
+    </td>
+    <td  class="p-1">
+        <label class="form-label" for="invoice_detail_price">Price</label>
+        {{ form.price }}
+    </td>
+   
+    <td  class="p-0 py-1">
+        <span class="form-label" for="ptotal">Total</span>
+        <div class="ptotal py-2"><span id="ptotal">0.00</span> XAF</div>
+    </td>
+    <td  class="py-2 m-0 delete-row">
+        <label class="form-label py-1" for="invoice_price">
+            <a class="danger mr-1"><i class="la la-trash-o"></i></a>
+        </label>
+    </td>
+    
+</tr>

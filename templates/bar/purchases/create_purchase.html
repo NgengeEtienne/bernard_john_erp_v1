@@ -1,0 +1,412 @@
+{% extends "base2.html" %}
+<!-- Content Row -->
+{% block title %}
+{% if invoice.pk %}
+    Edit  Purchase
+{% else %}
+Add Purchase
+{% endif %}
+{% endblock title %}
+{% block content %}
+<div class="row">   
+   <style>
+    .table td:first-child input.form-control {
+        width: 700px;
+      }
+      
+      .table td:not(:first-child) input.form-control {
+        width: 100px;
+      }
+      td{
+        padding:auto 0px;
+      }
+
+    </style>
+
+    
+   
+    <div class="col-xl-12 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <span class="m-0 font-weight-bold text-primary">
+                    {% if invoice.pk %}
+                        Edit  Purchase
+                    {% else %}
+                    Create Purchase
+                    {% endif %}
+                </span>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'bar:create-purchase' %}">
+                    {% csrf_token %}
+                   
+                    <div class="row d-flex">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_date">Date</label>
+                                {{ form.created }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_sales_session">Department</label>
+                                <input type="text" name="department" id="department" value="Bakery" aria-readonly="true" readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_customer_name">Tag</label>
+                                {{ form.status }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex">
+                        
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_customer_name">Supplier Name</label>
+                                {{ form.supplier_name }}
+                            </div>
+                        </div>
+
+                         <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="invoice_sales_session">Employee</label>
+                                {{ form.employee }}
+                            </div>
+                        </div> 
+                            <div class="col-md-4 ml-auto d-flex flex-wrap align-content-center px-5">
+                                <div class="form-group text-success ">
+                                        <span class="form-label" for="invoice_total">Total(XAF)</span>
+                                        <div><strong class="invoice_total " id="invoice_total">0.00</strong> XAF</div>
+                                        {{ form.invoice_total }}
+                                    
+                                </div>
+     
+                            </div>
+                        </div>
+                    </div>
+                     {% comment %} {{ formset.management_form }}  {% endcomment %}
+
+                    <div class="table form-table" style="border-top:0px">
+                        <table class="table table-striped">
+                            {% for form in formset %}
+                            {{ form.non_field_errors }}
+                         
+                       
+                           
+                            {{ form.raw_material.errors }}
+                            {{ form.quantity.errors }}
+                            {{ form.price.errors }}
+                            {{ form.discount_amount.errors }}
+                            {{ form.discount_value.errors }}
+                        {% endfor %}
+                            {% for form in formset %}
+                            <tr>
+                                
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_detail_product">Raw Material</label>
+                                    {{ form.product_name }}
+                                </td>
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_detail_qty">Quantity</label>
+                                    {{ form.quantity }}
+                                </td>
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_detail_price">Price</label>
+                                    {{ form.selling_price }}
+                                </td>
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_discount_price">Discount Price</label>
+                                    {{ form.discount_amount }}
+                                </td>
+                                <td  class="p-1">
+                                    <label class="form-label" for="invoice_discount_value">Discount value</label>
+                                    {{ form.discount_value }}
+                                </td>
+                                <td  class="p-0 py-1">
+                                    <span class="form-label" for="ptotal">Total</span>
+                                    <div class="ptotal py-2"><span id="ptotal">0.00</span> XAF</div>
+                                </td>
+                                <td  class="py-2 m-0">
+                                    <label class="form-label py-1" for="invoice_price">
+                                        <a class="muted mr-1"><i class="la la-trash-o"></i></a>
+                                    </label>
+                                </td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-center">
+                        <input class="btn btn-outline-warning add-form-row" style="margin: 0 1em 0 1em; width: 40%" type="button" value="Add more product" id="add_more">
+                        <input class="btn btn-outline-success"  style="margin: 0 1em 0 1em; width: 40%" type="button" value="Submit" name="create-invoice">
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+ 
+{% endblock %}
+
+{% block custom_js %}
+    
+
+
+    {% load static %}
+<link rel="stylesheet" href="{% static '' %}app-assets/custom/selectize.bootstrap3.css">
+<script src="{% static '' %}app-assets/custom/jquery-3.6.0.min.js"></script>
+<script src="{% static 'app-assets/custom/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app-assets/custom/selectize.min.js' %}"></script>
+<script>
+        const productNames = [
+            //{ value: '1', text: 'gato' },
+            //{ value: 'product2', text: 'Product 2' },
+            //{ value: 'product3', text: 'Product 3' }
+            // Add more product names as needed
+        ];
+        
+        $(document).ready(function() {
+            // Initialize selectize for customer name
+            $('#purchase_supplier_name').selectize({
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+        
+            // Initialize selectize for product name and fetch options
+            var $select = $('select[name$="product_name"]').selectize({
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+        
+            var selectizeControl = $select[0].selectize;
+        
+            // Fetch options and store in productNames array
+            var options = selectizeControl.options;
+            for (var key in options) {
+                if (options.hasOwnProperty(key)) {
+                    productNames.push({ value: key, text: options[key].text });
+                }
+            }
+        
+            // Function to initialize selectize for new rows
+            function initializeSelectize(row) {
+                row.find('select[name$="product_name"]').each(function() {
+                    if ($(this)[0].selectize) {
+                        $(this)[0].selectize.destroy();
+                    }
+                    $(this).selectize({
+                        create: false,
+                        options: productNames,
+                        sortField: {
+                            field: 'text',
+                            direction: 'asc'
+                        }
+                    });
+                });
+                $('.selectize-input').addClass('form-control');
+            }
+        
+            // Event listener for Add More button
+            $('#add_more').click(function() {
+                $.ajax({
+                    url: "/bar/add_more_row_purchase",  // Update with your URL
+                    method: 'GET',
+                    success: function(response) {
+                        var $newRow = $(response.row_html);
+                        $('table').append($newRow);
+                        initializeSelectize($newRow);
+                    }
+                });
+            });
+        
+            // Event listener for Delete button
+            $(document).on('click', '.delete-row', function() {
+                var row = $(this).parent();
+                row.find('input').val('');
+                row.find('.ptotal').text('0.00');
+                row.remove();
+                calcTotal(); // Recalculate the invoice_total if needed
+            });
+        
+            // Event listener for quantity and price input changes
+            $(document).on('input', 'input[name$="-quantity"], input[name$="-selling_price"], input[name$="-discount_value"], input[name$="-discount_amount"]', function() {
+                var $row = $(this).closest('tr');
+            
+                // Check if $row is valid; fallback to the first row if not
+                if (!$row.length) {
+                    $row = $('table tr:first');
+                }
+            
+                calcTotal($row);
+            });
+            
+        
+
+            function calcTotal($row) {
+                //console.log($row);
+                
+                    var quantity = parseFloat($row.find('input[name$="-quantity"]').val());
+                    var price = parseFloat($row.find('input[name$="-selling_price"]').val());
+                    var discountPrice = parseFloat($row.find('input[name$="-discount_amount"]').val());
+                    var discountValueInput = $row.find('input[name$="-discount_value"]');
+                    var ptotalSpan = $row.find('span[id^="ptotal"]');
+                    //var hinvoice_total = $('#hinvoice_total').val();
+
+                
+                    var amount = isNaN(quantity) || isNaN(price) ? 0 : (quantity * price) - (quantity * discountPrice);
+                
+                    discountValueInput.val((quantity * discountPrice).toFixed(2));
+                    ptotalSpan.text(amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                    
+                    //console.log("Row:", $this);
+                    //console.log("Quantity:", quantity);
+                   // console.log("Price:", price);
+                    //console.log("Discount Price:", discountPrice);
+                
+                    
+                  //  console.log("Rtot:", ptotalSpan);
+                
+                    var totalSum = 0;
+
+                    $('tr').each(function(index, element) {
+                        // Find the span with id "ptotal" in the current row
+                        var spanValue = $(element).find('span#ptotal').text();
+                    
+                        // Remove non-numeric characters except for decimal points
+                        var numericValue = parseFloat(spanValue.replace(/[^0-9.-]/g, ''));
+                    
+                        // Add the numeric value to the total sum if it's a valid number
+                        if (!isNaN(numericValue)) {
+                            totalSum += numericValue;
+                        }
+                    });
+                    
+                    //console.log("Gtot:", totalSum);
+                $('#invoice_total').text(totalSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                $('#hinvoice_total').val(totalSum)
+            }
+            
+
+            // Event listener for product change
+            
+            $(document).on('change', 'select[name$="-product_name"]', function() {
+                var selectId = $(this).attr('id'); // Get the ID of the changed select element
+                var productId = $(this).val();
+                var $this = $(this);
+                var row = $(this).closest('.tr');
+                var $tr = $this.closest('tr'); // Find the closest `tr` to the changed select
+
+                calcTotal()
+              });
+              
+            
+            
+        
+            // Initialize Selectize for the initial visible rows
+            initializeSelectize($('.tr:first'));
+            $('.selectize-input').addClass('form-control');
+        });
+
+
+        $('.btn[name="create-invoice"]').click(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+        
+                // Initialize an array to hold error messages
+                var errors = [];
+
+                // Check required fields in the main form
+                var requiredFields = ['employee','supplier_name', 'created', 'department','status']; // Add all required fields here
+
+                requiredFields.forEach(function(field) {
+                    var value = $(`input[name="${field}"], select[name="${field}"]`).val();
+                    if (!value) {
+                        errors.push(`The ${field} field is required.`);
+                    }
+                });
+
+            // Serialize the main form and formset data
+            var formData = $('form').serializeArray();
+            
+            // Initialize row count
+            var rowCount = 0;
+        
+            // Iterate through each row in the formset (each 'tr' element)
+            $('tr').each(function(index, element) {
+                // Increment the row count
+                rowCount++;
+        
+                // Serialize the inputs in each row
+                $(element).find('input, select').each(function() {
+                    var inputName = $(this).attr('name');
+                    var inputValue = $(this).val();
+        
+                    if (inputName) {
+                        // Check and rename the input name based on certain conditions
+                        if (inputName.includes("product_name")) {
+                            inputName = `raw_material${rowCount}`;
+                        } else if (inputName.includes("quantity")) {
+                            inputName = `quantity_${rowCount}`;
+                        } else if (inputName.includes("-selling_price")){
+                            inputName = `price_${rowCount}`;
+                        } else if (inputName.includes("discount_amount")) {
+                            inputName = `discount_amount_${rowCount}`;
+                        }
+            
+                        // Push the renamed input name and its value into formData
+                        formData.push({
+                            name: inputName,
+                            value: inputValue
+                        });
+                    }
+                });
+
+            });
+        
+        
+            // Add row_count to the formData
+            formData.push({
+                name: "row_count",
+                value: rowCount
+            });
+         
+        if (errors.length > 0) {
+            // Display error messages to the user
+           
+            alert(errors.join('\n'));
+        } else {
+            //console.log("formdata is: ",formData);
+            $.ajax({
+                url: "{% if invoice.pk %}{% url 'bar:edit-purchase' invoice.pk %}{% else %}{% url 'bar:create-purchase' %}{% endif %}", // Update with your URL to handle form submission
+                type: "POST",
+                data: $.param(formData),
+                success: function(response) {
+                    // Handle successful submission
+                    console.log("Form submitted successfully:", response);
+                    //displayMessage("success", "Invoice created successfully!");
+                    //console.log(formData);
+                    window.location.href = "{% url 'bar:purchases' %}";
+                    // Display success message or redirect as needed
+                },
+                error: function(error) {
+                    console.error("Error submitting form:", error);
+                    // Handle errors if necessary (e.g., display error message)
+                }
+            });
+        }
+        });
+        
+       
+        
+    </script>        
+{% endblock %}

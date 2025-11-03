@@ -1,0 +1,129 @@
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% if form.instance.pk %} Edit Customer Return Item {% else %} Add Customer Return Item {% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="content-body">
+    <section id="{% if form.instance.pk %}edit-customer-return-item{% else %}add-customer-return-item{% endif %}">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            {% if form.instance.pk %}
+                                Edit Customer Return Item
+                            {% else %}
+                                Add Customer Return Item
+                            {% endif %}
+                        </h2>
+                        <a href="{% url 'bakery:customer-return-items-list' %}" class="btn btn-primary">Back to Return Items</a>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <form class="form" method="post" novalidate>
+                                {% csrf_token %}
+
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    <li>
+                                                        {{ field.label }}: {{ field.errors|striptags }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <!-- Date -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_date">Date</label>
+                                            {% render_field form.date class="form-control" placeholder="Select Date" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Customer -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_customer">Customer</label>
+                                            {% render_field form.customer class="form-control" placeholder="Select Customer" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Invoice -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_invoice">Invoice</label>
+                                            {% render_field form.invoice class="form-control" placeholder="Select Invoice" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Product -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_product">Product</label>
+                                            {% render_field form.product class="form-control" placeholder="Select Product" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Quantity -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_quantity">Quantity</label>
+                                            {% render_field form.quantity class="form-control" placeholder="Enter Quantity" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Price -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_price">Price</label>
+                                            {% render_field form.price class="form-control" placeholder="Enter Price" %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Total -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_total">Total</label>
+                                            {% render_field form.total class="form-control" placeholder="Enter Total" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <a href="{% url 'bakery:customer-return-items-list' %}">
+                                        <button type="button" class="btn btn-warning mr-1">
+                                            <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> 
+                                        {% if form.instance.pk %}
+                                            Update
+                                        {% else %}
+                                            Save
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

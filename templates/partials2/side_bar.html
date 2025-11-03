@@ -1,0 +1,25 @@
+{% load static %}
+
+<div class="content-header row">
+</div>
+<div class="content-detached content-center">
+    <div class="content-body">
+        <div class="content-overlay"></div>
+
+        <!-- Hospital Info cards -->
+
+        <!-- Hospital Info cards Ends -->
+
+
+        {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show" {{ message.tags }} role="alert">
+                <strong>{{ message|safe }}</strong> .
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          {% endfor %}
+
+
+    </div>
+</div>

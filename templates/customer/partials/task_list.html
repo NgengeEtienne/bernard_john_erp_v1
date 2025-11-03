@@ -1,0 +1,139 @@
+
+{% load static %}
+
+
+<!-- Task List Starts-->
+        <div class="content-right">
+            <div class="content-overlay"></div>
+            <div class="content-wrapper">
+                <div class="content-header row">
+                </div>
+                <div class="content-body">
+                    <div class="app-content-overlay"></div>
+                    <div class="todo-app-area">
+                        <div class="todo-app-list-wrapper">
+                            <div class="todo-app-list">
+                                <div class="todo-fixed-search d-flex justify-content-between align-items-center">
+                                    <div class="sidebar-toggle d-block d-lg-none">
+                                        <i class="ft-align-justify"></i>
+                                    </div>
+                                    <form class="form-group position-relative has-icon-left m-0 flex-grow-1 pl-2">
+                                        <input type="text" class="form-control todo-search" id="todo-search" placeholder="Search Task" name="search">
+                                        <div class="form-control-position">
+                                            <i class="ft-search"></i>
+                                        </div>
+                                    </form>
+                                    <div class="todo-sort dropdown mr-1">
+                                        <button class="btn dropdown-toggle sorting" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ft-filter"></i>
+                                            <span>Department</span>
+                                        </button>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortDropdown">
+                                          {% for cat in categories %}
+                                            <a class="dropdown-item ascending" href="{{ cat.get_absolute_url }}">{{cat.name|title}}</a>
+                                          {% endfor %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="todo-task-list list-group">
+
+                                    <!-- task list start -->
+                                    <ul class="todo-task-list-wrapper list-unstyled" id="todo-task-list-drag">
+
+                                      {% for task in Tasks %}
+
+
+                                        <li class="todo-item" data-name="Maria Garcia">
+                                            <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
+                                                <div class="todo-title-area d-flex">
+                                                    <i class='ft-more-vertical handle'></i>
+                                                  <!--  <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="checkbox4">
+                                                        <label class="custom-control-label" for="checkbox4"></label>
+                                                    </div> -->
+                                                    <a class="todo-title mx-50 m-0 " href="{{task.get_absolute_url}}"> {{ task.title }}</a>
+                                                </div>
+                                                <div class="todo-item-action d-flex align-items-center">
+                                                  <p class="todo-title mx-50 m-0 truncate text-uppercase">{{ task.employee }} |</p>
+                                                  <p class="todo-title mx-50 m-0 truncate"> Remaning {{ task.expiry_date| timeuntil }}</p>
+
+                                                  {% if task.status == True %}
+
+                                                    <div class="todo-badge-wrapper d-flex">
+                                                      <!--  <span class="badge badge-danger badge-pill ml-50"></span> -->
+                                                        <span class="badge badge-pill badge-success ml-50">{{ task.state}} </span>
+                                                        &nbsp;&nbsp;
+                                                        <span class="badge badge-primary badge-pill">{{ task.category }}</span>
+                                                    </div>
+
+                                                      {% else %}
+
+                                                    <div class="todo-badge-wrapper d-flex">
+                                                        <span class="badge badge-danger badge-pill ml-50">{{ task.state}}</span>
+                                                        &nbsp;&nbsp;
+                                                        <span class="badge badge-primary badge-pill">{{ task.category }}</span>
+                                                    </div>
+
+                                                    {% endif %}
+
+
+                                                    <div class="avatar ml-1">
+                                                        <img src="{{ task.employee.images.url }}" alt="avatar" height="30" width="30">
+                                                    </div>
+                                                    <a class='todo-item-favorite ml-75 warning'><i class="ft-star"></i></a>
+                                                    <a class='todo-item-delete ml-75'><i class="ft-trash-2"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        {% endfor %}
+
+                                    <!--    <li class="todo-item" data-name="Maria Garcia">
+                                            <div class="todo-title-wrapper d-flex justify-content-sm-between justify-content-end align-items-center">
+                                                <div class="todo-title-area d-flex">
+                                                    <i class='ft-more-vertical handle'></i>
+                                                     <div class="custom-control custom-checkbox">
+                                                          <input type="checkbox" class="custom-control-input" id="checkbox4">
+                                                          <label class="custom-control-label" for="checkbox4"></label>
+                                                      </div>
+                                                    <p class="todo-title mx-50 m-0 truncate">{{ task.title }}</p>
+                                                    <a class="todo-title mx-50 m-0 truncate" href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+                                                </div>
+                                                <div class="todo-item-action d-flex align-items-center">
+                                                  <p class="todo-title mx-50 m-0 truncate text-uppercase">{{ task.employee }}</p>
+                                                  <p class="todo-title mx-50 m-0 truncate">{{ task.expiry_date|timeuntil  }}</p>
+                                                    <div class="todo-badge-wrapper d-flex">
+                                                        <span class="badge badge-danger badge-pill ml-50">{{ task.state}}</span>
+                                                        &nbsp;&nbsp;
+                                                        <span class="badge badge-primary badge-pill">{{ task.category }}</span>
+                                                    </div>
+                                                    <div class="avatar ml-1">
+                                                        <img src="{{ task.employee.images.url }}" alt="avatar" height="30" width="30">
+                                                    </div>
+                                                    <a class='todo-item-favorite ml-75 warning'><i class="ft-star"></i></a>
+                                                    <a class='todo-item-delete ml-75'><i class="ft-trash-2"></i></a>
+                                                </div>
+                                            </div>
+                                        </li> -->
+
+
+
+
+
+                                    </ul>
+                                    <!-- task list end -->
+                                    <div class="no-results">
+                                        <h5>No Items Found</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Task List Starts-->
