@@ -1,0 +1,25 @@
+/*================================================================================
+	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+/* Target read-only input fields */
+input[readonly] {
+    border: 1px solid #ccc; /* Example border style */
+    background-color: #f2f2f2; /* Example background color */
+    color: #333; /* Example text color */
+    padding: 8px; /* Example padding */
+    font-size: 14px; /* Example font size */
+    /* Add any other styles as needed */
+}
+
+/* Optional: Style for hover or focus states */
+input[readonly]:hover,
+input[readonly]:focus {
+    border-color: #666; /* Example hover/focus border color */
+}
