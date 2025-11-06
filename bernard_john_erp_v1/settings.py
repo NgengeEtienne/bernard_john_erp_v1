@@ -111,11 +111,11 @@ WSGI_APPLICATION = 'bernard_john_erp_v1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bjcomplex_erp', # database name
-        'USER': 'postgres', #username
-        'PASSWORD': 'root', #password
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME'), # database name
+        'USER': os.getenv('DB_USER'), #username
+        'PASSWORD': os.getenv('DB_PASSWORD'), #password
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     },
 
 }
