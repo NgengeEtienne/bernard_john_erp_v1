@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g*owtue*&en@qt%-u3_6&mi0nmej5s$mtzv#(9vqoj7__j#tqx
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Application definition
 
@@ -75,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     'user.middleware.LoginRequiredMiddleware',  # Add your custom middleware here
 
