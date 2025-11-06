@@ -79,6 +79,7 @@ MIDDLEWARE = [
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     'user.middleware.LoginRequiredMiddleware',  # Add your custom middleware here
 
+
 ]
 
 ROOT_URLCONF = 'bernard_john_erp_v1.urls'
@@ -192,7 +193,18 @@ USE_L10N = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.127.0.0.1',
+    'https://*.localhost',
+    'https://bernard-john-erp-v1.onrender.com',
+    'https://*.onrender.com',
+]
+ALLOWED_HOSTS = [
+    'bernard-john-erp-v1.onrender.com',
+    '.onrender.com',  # Use a wildcard to cover the subdomain
+    '127.0.0.1',      # For local development
+    'localhost',      # For local development
+]
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
