@@ -1,5 +1,4 @@
-from inspect import Attribute
-from tkinter import Widget
+
 from import_export import resources, fields
 from import_export.widgets import ForeignKeyWidget, ManyToManyWidget,DateWidget
 from .models import *
